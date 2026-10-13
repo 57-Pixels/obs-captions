@@ -4,7 +4,7 @@ Status: draft, not implemented. Mirrors `engine/engine-api.h`.
 
 ## Transport
 
-- Windows named pipe `\.\pipe\obs-captions-<plugin-pid>-<random>`, created
+- Windows named pipe `\.\pipe\simple-local-captions-<plugin-pid>-<random>`, created
   by the plugin (server) before it launches the engine; the name is passed
   on the engine command line. One client only; the pipe ACL is limited to
   the current user.
@@ -87,7 +87,7 @@ A localhost WebSocket lets an app that *knows* the exact spoken line push it
 directly. These lines bypass ASR and take priority in the scheduler while
 their estimated duration is active.
 
-- Endpoint: `ws://127.0.0.1:<port>/obs-captions/v0` (port configurable,
+- Endpoint: `ws://127.0.0.1:<port>/simple-local-captions/v0` (port configurable,
   default off). Bound to loopback only; requires a token shown in the dock.
 - Message:
   ```json

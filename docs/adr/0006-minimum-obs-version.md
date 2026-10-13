@@ -35,4 +35,4 @@ build 30.2.3:
 - APIs added after 30.2 cannot be used. Any proposal to raise the minimum
   needs a new ADR.
 - Template updates must re-apply the two patches (search for
-  "obs-captions:" in `cmake/`).
+  "simple-local-captions:" in `cmake/`).

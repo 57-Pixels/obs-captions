@@ -48,7 +48,7 @@ documented decisions beat cleverness.
 - `core/` changes require golden-file tests written **first**
   (`core/tests/golden/`), then the implementation.
 - No refactor may span `plugin/`, `core/` and `engine/` in one change.
-- Template patches in `cmake/` are marked `obs-captions:`; keep them minimal
+- Template patches in `cmake/` are marked `simple-local-captions:`; keep them minimal
   and re-apply them after template updates (ADR 0006).
 
 ## Useful commands (Windows)

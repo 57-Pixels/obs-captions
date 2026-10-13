@@ -45,7 +45,7 @@ ctest --test-dir build_core -C Debug --output-on-failure
 ```
 
 To try the plugin in OBS, install it into a scratch folder and copy the
-resulting `obs-captions/` folder into `C:\ProgramData\obs-studio\plugins\`:
+resulting `simple-local-captions/` folder into `C:\ProgramData\obs-studio\plugins\`:
 
 ```
 cmake --install build_x64 --config RelWithDebInfo --prefix dist

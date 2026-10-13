@@ -13,7 +13,7 @@ question, the current assumption, and who/what can answer it.
    "Visual Studio 18 2026" generator (CMake 4.3 rejects every toolset/version
    spec tried). Local builds use MSVC 14.51; CI (VS 2022, 14.4x) is the
    reference. Acceptable, or should contributors install VS 2022 Build Tools?
-3. **Project name.** "obs-captions" uses the OBS name. Is that acceptable
+3. **Project name.** "simple-local-captions" uses the OBS name. Is that acceptable
    under OBS trademark guidance, or should we pick another name before the
    first release?
 

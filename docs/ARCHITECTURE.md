@@ -1,6 +1,6 @@
 # Architecture
 
-obs-captions turns a streamer's microphone audio into native CEA-608 closed
+simple-local-captions turns a streamer's microphone audio into native CEA-608 closed
 captions (CC1) on the OBS stream output. It is built from three parts, kept
 apart so that each can be understood, tested and replaced on its own.
 

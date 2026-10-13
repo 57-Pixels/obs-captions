@@ -13,7 +13,7 @@ problem with in-process ASR plugins); and the OS scheduler cannot tell
 
 ## Decision
 
-ASR runs in `obs-captions-engine.exe`, launched and supervised by the plugin
+ASR runs in `simple-local-captions-engine.exe`, launched and supervised by the plugin
 (`engine-client.c`). They talk over a Windows named pipe
 ([protocol/PROTOCOL.md](../../protocol/PROTOCOL.md)). The engine runs at
 `BELOW_NORMAL_PRIORITY_CLASS`. The plugin never loads an inference runtime.

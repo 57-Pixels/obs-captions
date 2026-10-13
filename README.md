@@ -1,4 +1,4 @@
-# obs-captions
+# simple-local-captions
 
 Live, local speech-to-text for OBS Studio on Windows, sent to Twitch as
 **native closed captions** (CEA-608, CC1) that viewers switch on with the CC
