@@ -15,4 +15,5 @@ include(helpers)
 # resolves relative to plugin/CMakeLists.txt (see set_target_properties_plugin
 # in cmake/windows/helpers.cmake).
 add_subdirectory(core)
+add_subdirectory(engine)
 add_subdirectory(plugin)
