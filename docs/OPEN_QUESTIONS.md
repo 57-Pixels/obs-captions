@@ -32,11 +32,6 @@ items move to "Resolved" with the decision, so the reasoning is kept.
    artifact phrase, e.g. just "Thank you." and nothing else. The longest
    artifact phrases (subtitle credits) are 6 words, so the word limit is 8.
    Keep, or make it smaller?
-14. **TTS lines and the word list.** A TTS app sends the exact text it
-    speaks, so TTS lines skip the word-replacement list and the repeat
-    filter; they still get the profanity mask and are converted to the 608
-    character set. Should the word list also apply to TTS lines (e.g. to fix
-    a name the TTS app spells differently)?
 17. **Voice-activity signal.** When the real engine exists (phase 4), it
     should report per hypothesis whether voice was detected, so the artifact
     filter can drop invented text without any timing delay. Field name and
@@ -66,3 +61,8 @@ items move to "Resolved" with the decision, so the reasoning is kept.
 15. **Long monologues** (2026-10-13): old segments are trimmed in batches of
     16 (when more than 64 are kept), so text re-wraps rarely.
 16. **Maximum rows** (2026-10-13): 4 is enough; good timing matters more.
+14. **TTS lines and the word list** (2026-10-13): no. TTS lines are shown
+    exactly as the app sends them; their spelling is part of the streamer's
+    personality. The word list only applies to recognized speech from real
+    people. (TTS lines still get the optional profanity mask and conversion
+    to the 608 character set, which the screen needs.)
