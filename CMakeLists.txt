@@ -11,7 +11,7 @@ include(compilerconfig)
 include(defaults)
 include(helpers)
 
-# obs-captions: the OBS module lives in plugin/ so that its data/ directory
+# simple-local-captions: the OBS module lives in plugin/ so that its data/ directory
 # resolves relative to plugin/CMakeLists.txt (see set_target_properties_plugin
 # in cmake/windows/helpers.cmake).
 add_subdirectory(core)

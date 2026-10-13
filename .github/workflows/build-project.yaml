@@ -73,7 +73,7 @@ jobs:
 
   macos-build:
     name: Build for macOS 🍏
-    # obs-captions: Windows x64 only for now; kept for later (README roadmap).
+    # simple-local-captions: Windows x64 only for now; kept for later (README roadmap).
     if: false
     runs-on: macos-15
     needs: check-event
@@ -179,7 +179,7 @@ jobs:
 
   ubuntu-build:
     name: Build for Ubuntu 🐧
-    # obs-captions: Windows x64 only for now; kept for later (README roadmap).
+    # simple-local-captions: Windows x64 only for now; kept for later (README roadmap).
     if: false
     strategy:
       matrix:

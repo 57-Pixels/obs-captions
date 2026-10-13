@@ -54,7 +54,7 @@ function(_setup_obs_studio)
 
   if(OS_WINDOWS)
     set(_cmake_generator "${CMAKE_GENERATOR}")
-    # obs-captions: OBS 30.2.x reads CMAKE_GENERATOR_PLATFORM verbatim as its
+    # simple-local-captions: OBS 30.2.x reads CMAKE_GENERATOR_PLATFORM verbatim as its
     # dependency arch, so a ",version=" suffix breaks its configure. The SDK
     # still reaches the inner build via CMAKE_SYSTEM_VERSION. See ADR 0006.
     set(_cmake_arch "-A ${arch}")
@@ -217,7 +217,7 @@ function(_check_dependencies)
       set(_obs_version ${version})
       set(_obs_destination "${destination}")
       list(APPEND CMAKE_PREFIX_PATH "${dependencies_dir}")
-      # obs-captions: OBS 30.x installs package configs to <prefix>/cmake/<name>
+      # simple-local-captions: OBS 30.x installs package configs to <prefix>/cmake/<name>
       # on Windows (31.0+ uses lib/cmake), which find_package does not search.
       list(APPEND CMAKE_PREFIX_PATH "${dependencies_dir}/cmake")
     endif()

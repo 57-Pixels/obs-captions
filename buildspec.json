@@ -33,13 +33,13 @@
     },
     "platformConfig": {
         "macos": {
-            "bundleId": "io.github.57-pixels.obs-captions"
+            "bundleId": "io.github.57-pixels.simple-local-captions"
         }
     },
-    "name": "obs-captions",
-    "displayName": "OBS Captions",
+    "name": "simple-local-captions",
+    "displayName": "Simple Local Captions",
     "version": "0.1.0",
-    "author": "obs-captions contributors",
-    "website": "https://github.com/57-Pixels/obs-captions",
+    "author": "simple-local-captions contributors",
+    "website": "https://github.com/57-Pixels/simple-local-captions",
     "email": ""
 }
