@@ -13,7 +13,6 @@ ctest --test-dir build_core -C Debug --output-on-failure
 
 ```
 Hypothesis (partial/final) --+
-                             |   TTS overlap? -> drop (tts_active)
                              v
         word replacement -> hallucination filter (off by default)
                              v
@@ -21,7 +20,7 @@ Hypothesis (partial/final) --+
                              v
              transliteration to the CEA-608 set (stripped count)
                              v
-TextEvent (TTS) ---------> scheduler: latest-wins slot, rolling window,
+                           scheduler: latest-wins slot, rolling window,
                            silence clear, ">> " speaker marks
                              v
                  tick(now) -> optional CaptionUpdate{text, display_duration}

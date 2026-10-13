@@ -29,12 +29,4 @@ struct Hypothesis {
 	std::string speaker; /* optional; empty = unknown */
 };
 
-/* An exact line from a TTS or VTuber app. Already final; bypasses ASR. */
-struct TextEvent {
-	std::string text; /* UTF-8 */
-	int64_t start_ms = 0;
-	int64_t est_duration_ms = 0;
-	std::string speaker; /* optional */
-};
-
 } // namespace slc

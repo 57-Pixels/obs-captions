@@ -14,7 +14,6 @@ namespace slc {
 enum class SuppressReason {
 	repeat,        /* (near-)duplicate final, see filters/repeat.h */
 	hallucination, /* isolated silence artifact, see filters/hallucination.h */
-	tts_active,    /* ASR final overlapping an active TTS line */
 	superseded,    /* display text replaced before it could be sent */
 	count,
 };

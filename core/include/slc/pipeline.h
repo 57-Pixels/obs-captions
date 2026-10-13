@@ -9,7 +9,7 @@
  * The caption pipeline: filters -> scheduler -> formatter.
  *
  * Usage (one thread only, the plugin's engine-client thread):
- *   push() every hypothesis or TTS line as it arrives, call tick(now) about
+ *   push() every hypothesis as it arrives, call tick(now) about
  *   every 100 ms, and hand any returned CaptionUpdate to caption-out.c.
  *
  * Deterministic: the pipeline never reads a clock. Time comes from the event
@@ -35,7 +35,6 @@ public:
 	CaptionPipeline &operator=(const CaptionPipeline &) = delete;
 
 	void push(const Hypothesis &hypothesis);
-	void push(const TextEvent &text);
 
 	/* Returns at most one update per minimum interval, only on change. */
 	std::optional<CaptionUpdate> tick(int64_t now_ms);

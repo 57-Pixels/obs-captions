@@ -8,7 +8,7 @@
 /*
  * Latest-wins caption scheduler (ADR 0003).
  *
- * Holds the text on screen as segments: committed finals and TTS lines,
+ * Holds the text on screen as segments: committed finals,
  * plus optionally the stable part of the current partial. tick(now):
  *
  * 1. If text is on screen and now >= newest segment end + clear_after_ms,

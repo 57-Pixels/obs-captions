@@ -69,8 +69,6 @@ const char *suppress_reason_name(SuppressReason reason)
 		return "repeat";
 	case SuppressReason::hallucination:
 		return "hallucination";
-	case SuppressReason::tts_active:
-		return "tts_active";
 	case SuppressReason::superseded:
 		return "superseded";
 	case SuppressReason::count:
