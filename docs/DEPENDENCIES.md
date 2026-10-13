@@ -20,3 +20,4 @@ GPL-2.0-compatible needs the maintainer's approval before it is added.
 | doctest | 2.5.3 | MIT | `core/third_party/doctest/` | Single-header test framework for core/ |
 | clang-format | 19.1.x | Apache-2.0 WITH LLVM-exception | CI (`obsproject/tools`) | C/C++ formatting check |
 | gersemi | >= 0.12 (0.19.3 used locally) | MPL-2.0 | CI | CMake formatting check |
+| Python 3 (standard library only) | 3.8+ | PSF-2.0 | `core/formatter/gen-608-tables.py` | Optional: regenerates the 608 tables from OBS's libcaption; not needed to build |

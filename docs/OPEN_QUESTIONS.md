@@ -34,3 +34,37 @@ question, the current assumption, and who/what can answer it.
    ends?
 7. **Hallucination blocklist languages.** v1 blocklist is English only. Which
    other Latin-script languages need lists for v1?
+8. **"Short" in the hallucination rule.** The brief lists subtitle-credit
+   phrases ("Subtitles by the Amara.org community", 6 words) but also says
+   the rule applies only to short hypotheses. Assumption: a candidate must
+   match a blocklist entry as the *whole* utterance, and `max_words`
+   defaults to 8 so credit phrases qualify. Is 8 right, or should credits
+   be a separate always-on list?
+9. **Cost of the isolation rule.** A genuine "thank you" said into silence
+   (nothing within 2 s before or after) is never shown, and a blocklisted
+   phrase followed by speech appears up to 2 s late. Acceptable trade-off?
+10. **Artifacts in a row.** A held candidate is released only by
+    non-blocklisted speech; a second blocklisted phrase does not vouch for it
+    (Whisper often repeats "Thank you." on silence). Correct?
+11. **Smart quotes on screen.** CEA-608 has curly quote and em-dash glyphs,
+    but per the brief they are converted to ASCII. Keep that, or use the 608
+    glyphs? Also unverified: whether Twitch players render 608 extended
+    characters (accents, music note) correctly. Check in phase 2.
+12. **Repeat threshold meaning.** "Repeated 3+ times" is implemented as: the
+    first two consecutive (near-)duplicate finals are shown, the 3rd and later
+    are dropped. Inside one utterance a phrase repeated 3+ times is cut to 2.
+    Should exact duplicates (likely engine re-sends) be dropped already at
+    the 2nd occurrence?
+13. **Speaker markers.** ">> " is added only when both the previous and the
+    new speaker are known and differ. Unknown speakers (no diarization yet)
+    never get markers. Should a TTS line always be marked, even after
+    unlabelled ASR text?
+14. **TTS text filtering.** TTS lines skip word replacement, repeat and
+    hallucination filters (they are exact), but still get the profanity mask
+    and transliteration. Right?
+15. **Long monologues.** The scheduler keeps at most 64 segments; dropping the
+    oldest can, rarely, change where an on-screen line wraps. Acceptable, or
+    trim only at paragraph boundaries?
+16. **Maximum rows.** Rows are capped at 4 (608 pop-on practice; 4 x 32
+    characters plus newlines already approaches libobs' 128-byte limit).
+    Does anyone need more?
