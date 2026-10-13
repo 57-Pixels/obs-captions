@@ -15,6 +15,7 @@
 /* LOG_INFO: libobs/util/base.h (via obs-module.h) */
 #include <plugin-support.h>
 
+#include "audio-tap.h"
 #include "caption-out.h"
 #include "frontend.h"
 #include "ui/caption-dock.h"
@@ -27,6 +28,7 @@ bool obs_module_load(void)
 	if (!caption_out_init())
 		return false;
 	frontend_init();
+	audio_tap_init();
 	if (!caption_dock_create())
 		obs_log(LOG_WARNING, "could not add the Captions dock");
 
@@ -36,6 +38,7 @@ bool obs_module_load(void)
 
 void obs_module_unload(void)
 {
+	audio_tap_shutdown();
 	frontend_shutdown();
 	caption_out_shutdown();
 	obs_log(LOG_INFO, "unloaded");

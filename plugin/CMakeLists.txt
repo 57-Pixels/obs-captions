@@ -44,6 +44,8 @@ target_sources(
     src/audio-tap.h
     src/caption-out.c
     src/caption-out.h
+    src/caption-test.c
+    src/caption-test.h
     src/engine-client.c
     src/engine-client.h
     src/frontend.c
