@@ -8,7 +8,7 @@ items move to "Resolved" with the decision, so the reasoning is kept.
 
 ### Caption output (verify on Twitch in roadmap phase 2)
 
-Run the checklist in [testing/twitch-captions.md](testing/twitch-captions.md);
+Run the checklist in [testing/captions.md](testing/captions.md);
 it answers 4, 5 and 11, plus:
 
 19. **Caption lifetime.** Does a caption stay on screen until replaced, or

@@ -41,7 +41,7 @@ plain-language status, and an Advanced panel for power users.
 0. Scaffold from obs-plugintemplate; plugin loads (done)
 1. `core/` caption library with golden-file tests (done)
 2. `caption-out` + "Send test caption" dock button (built; waiting for the
-   Twitch desktop and phone check in docs/testing/twitch-captions.md)
+   Twitch desktop and phone check in docs/testing/captions.md)
 3. `audio-tap` + ring buffer + `engine-client` against a fake engine that
    replays recorded transcripts
 4. Engine process with the first real CPU streaming backend (chosen from
