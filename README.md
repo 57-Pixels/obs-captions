@@ -4,9 +4,8 @@ Live, local speech-to-text for OBS Studio on Windows, sent to Twitch as
 **native closed captions** (CEA-608, CC1) that viewers switch on with the CC
 button, including on phones watching muted.
 
-> Status: **early development.** The plugin loads and logs, and the caption
-> logic (`core/`) is tested, but nothing is sent to the stream yet. See the
-> roadmap.
+> Status: **early development.** The Captions dock can send test captions to
+> your stream; speech recognition is not connected yet. See the roadmap.
 
 ## Why
 
@@ -41,8 +40,8 @@ plain-language status, and an Advanced panel for power users.
 
 0. Scaffold from obs-plugintemplate; plugin loads (done)
 1. `core/` caption library with golden-file tests (done)
-2. `caption-out` + "Send test caption" dock button (verify on Twitch desktop
-   and phone)
+2. `caption-out` + "Send test caption" dock button (built; waiting for the
+   Twitch desktop and phone check in docs/testing/twitch-captions.md)
 3. `audio-tap` + ring buffer + `engine-client` against a fake engine that
    replays recorded transcripts
 4. Engine process with the first real CPU streaming backend (chosen from

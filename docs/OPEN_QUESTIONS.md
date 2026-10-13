@@ -8,6 +8,13 @@ items move to "Resolved" with the decision, so the reasoning is kept.
 
 ### Caption output (verify on Twitch in roadmap phase 2)
 
+Run the checklist in [testing/twitch-captions.md](testing/twitch-captions.md);
+it answers 4, 5 and 11, plus:
+
+19. **Caption lifetime.** Does a caption stay on screen until replaced, or
+    do players hide it after a while? This decides whether the scheduler must
+    send an explicit clear (current) or can rely on the player.
+
 4. **Clearing the screen.** Does `obs_output_output_caption_text2` with an
    empty string (or a single space) clear the 608 display on Twitch desktop
    and mobile? libcaption's `caption_frame_from_text("")` produces an empty
