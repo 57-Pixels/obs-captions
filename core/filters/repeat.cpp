@@ -5,6 +5,7 @@
  */
 #include "filters/repeat.h"
 
+#include <algorithm>
 #include <vector>
 
 #include "filters/text-norm.h"
@@ -94,6 +95,10 @@ RepeatFilter::RepeatFilter(const FilterConfig &config)
 bool RepeatFilter::suppress(std::string_view text, int64_t t_start_ms, int64_t t_end_ms)
 {
 	std::string norm = normalize(text);
+	if (run > 0 && norm == last_norm && t_start_ms < last_end_ms) {
+		last_end_ms = std::max(last_end_ms, t_end_ms);
+		return true; /* re-send of the previous final */
+	}
 	bool continues = run > 0 && t_start_ms - last_end_ms <= window_ms && edit_ratio(norm, last_norm) <= ratio;
 	run = continues ? run + 1 : 1;
 	last_norm = std::move(norm);

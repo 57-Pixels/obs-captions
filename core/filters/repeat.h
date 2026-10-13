@@ -17,6 +17,10 @@
  *    equal or within near_duplicate_ratio edit distance form a run, as long
  *    as each starts within repeat_window_ms of the previous one's end. The
  *    threshold-th final of a run and every later one are suppressed.
+ *
+ * 3. Engine re-sends: a final with exactly the same normalized text as the
+ *    previous one that starts before the previous one ended is a duplicate
+ *    of the same speech. It is suppressed and does not extend the run.
  */
 
 #include <cstdint>
