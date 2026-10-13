@@ -1,0 +1,10 @@
+# A new speaker starts a new line with ">> "; the same speaker continues.
+ticks 100 10000
+at 1000 final "ready when you are" start=0 end=1000 speaker=A
+at 3000 final "lets go" start=2500 end=3000 speaker=B
+at 5000 final "push now" start=4500 end=5000 speaker=B
+---
+1000 "ready when you are"
+3000 "ready when you are\n>> lets go"
+5000 "ready when you are\n>> lets go push now"
+9000 ""

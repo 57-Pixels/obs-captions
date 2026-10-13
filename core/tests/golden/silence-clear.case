@@ -1,0 +1,11 @@
+# After 4 s without new text the screen clears, and the next speech starts
+# on a fresh screen instead of continuing the old text.
+ticks 100 13000
+at 1000 final "hello chat" start=200 end=1000
+at 8000 final "welcome back" start=7200 end=8000
+---
+1000 "hello chat"
+5000 ""
+8000 "welcome back"
+12000 ""
+stat emitted 4

@@ -1,0 +1,6 @@
+# A phrase looping inside one hypothesis is cut to two copies.
+ticks 100 6000
+at 1000 final "I mean I mean I mean I mean it works" start=0 end=1000
+---
+1000 "I mean I mean it works"
+5000 ""

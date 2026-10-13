@@ -1,0 +1,10 @@
+# A long monologue wraps at 28 columns and only the last 2 rows are shown.
+# The screen clears 4 s after the last final ended.
+ticks 100 10000
+at 2500 final "So today we are going to try the new ranked mode" start=0 end=2500
+at 5000 final "and honestly, I have no idea what I am doing." start=2700 end=5000
+---
+2500 "So today we are going to try\nthe new ranked mode"
+5000 "honestly, I have no idea\nwhat I am doing."
+9000 ""
+stat emitted 3

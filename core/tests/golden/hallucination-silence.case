@@ -1,0 +1,10 @@
+# Classic silence artifacts with no real speech around them: nothing is
+# ever shown. Each is held for 2 s to make sure no speech follows, then
+# dropped.
+ticks 100 30000
+at 10600 final "Thank you." start=10000 end=10600
+at 16000 final "Thanks for watching!" start=15000 end=16000
+at 24000 final "Subtitles by the Amara.org community" start=22000 end=24000
+---
+stat emitted 0
+stat suppressed.hallucination 3

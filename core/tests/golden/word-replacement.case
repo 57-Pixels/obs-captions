@@ -1,0 +1,8 @@
+# User word list: case-insensitive, whole words only ("valerant" inside
+# "valerants" is not replaced). Profanity mask on.
+config replace=valerant:Valorant replace=poggers:PogChamp profanity_mask=1
+ticks 100 6000
+at 1000 final "VALERANT is poggers, valerants are shit" start=0 end=1000
+---
+1000 "Valorant is PogChamp,\nvalerants are s***"
+5000 ""

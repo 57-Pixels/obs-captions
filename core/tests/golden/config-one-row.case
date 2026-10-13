@@ -1,0 +1,7 @@
+# Edge case: 1 row of 32 columns keeps only the newest line.
+config rows=1 cols=32
+ticks 100 6000
+at 1000 final "this is a much longer sentence than fits on one row" start=0 end=1000
+---
+1000 "than fits on one row"
+5000 ""

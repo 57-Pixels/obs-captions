@@ -1,0 +1,23 @@
+# Stable partials on: the first stable word is sent at once, then the
+# 1000 ms minimum interval holds every later update. Each newer text
+# replaces the waiting one (counted as superseded); nothing queues, so the
+# final appears at 1200 instead of trailing a backlog of partials.
+config show_stable_partial=1
+ticks 100 6000
+at 100 partial "we" start=0 end=100 stable=0
+at 200 partial "we need" start=0 end=200 stable=2
+at 300 partial "we need to" start=0 end=300 stable=7
+at 400 partial "we need to push" start=0 end=400 stable=10
+at 500 partial "we need to push mid" start=0 end=500 stable=15
+at 600 partial "we need to push mid right" start=0 end=600 stable=19
+at 700 partial "we need to push mid right now" start=0 end=700 stable=25
+at 800 partial "we need to push mid right now before" start=0 end=800 stable=29
+at 900 partial "we need to push mid right now before they" start=0 end=900 stable=36
+at 1000 partial "we need to push mid right now before they rotate" start=0 end=1000 stable=41
+at 1100 final "We need to push mid right now before they rotate." start=0 end=1100
+---
+200 "we"
+1200 "We need to push mid right\nnow before they rotate."
+5100 ""
+stat emitted 3
+stat suppressed.superseded 8

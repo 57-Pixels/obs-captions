@@ -1,0 +1,20 @@
+# Blocklisted words are real speech when they are part of a sentence or
+# close to other speech:
+# - "you" right after a sentence is kept (not isolated before).
+# - "thank you" followed within 2 s by more speech is released and shown.
+# - "I told you so" is never a candidate (more than the blocklisted text).
+ticks 100 25000
+at 1000 final "are you ready" start=200 end=1000
+at 1700 final "you" start=1500 end=1700
+at 10500 final "thank you" start=10000 end=10500
+at 12000 final "for the raid" start=11000 end=12000
+at 20000 final "I told you so" start=19000 end=20000
+---
+1000 "are you ready"
+2000 "are you ready you"
+5700 ""
+12000 "thank you for the raid"
+16000 ""
+20000 "I told you so"
+24000 ""
+stat suppressed.hallucination 0

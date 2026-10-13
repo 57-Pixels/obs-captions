@@ -1,0 +1,12 @@
+# The same phrase (exact or near-duplicate after normalizing) three or more
+# times in a row: the first two are shown, the rest suppressed.
+ticks 100 7000
+at 1000 final "let's go" start=700 end=1000
+at 2000 final "lets go" start=1700 end=2000
+at 3000 final "Let's go!" start=2700 end=3000
+at 4000 final "let's go" start=3700 end=4000
+---
+1000 "let's go"
+2000 "let's go lets go"
+6000 ""
+stat suppressed.repeat 2

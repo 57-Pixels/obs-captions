@@ -1,0 +1,8 @@
+# Smart punctuation becomes ASCII, 608 accented letters are kept, other
+# Latin letters fall back to the base letter, emoji are stripped.
+ticks 100 6000
+at 1000 final "It’s “GG” — nice… 🎉 café naïve Łódź" start=0 end=1000
+---
+1000 "It's \"GG\" -- nice...\ncafé naïve Lódz"
+5000 ""
+stat stripped_chars 1

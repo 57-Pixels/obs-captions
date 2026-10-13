@@ -1,8 +1,18 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 add_executable(obs-captions-core-tests)
-target_sources(obs-captions-core-tests PRIVATE test-main.cpp test-version.cpp)
-target_include_directories(obs-captions-core-tests PRIVATE ../third_party)
+target_sources(
+  obs-captions-core-tests
+  PRIVATE
+    test-main.cpp
+    test-version.cpp
+    test-golden.cpp
+    test-transliterate.cpp
+    test-wrap.cpp
+    test-filters.cpp
+    test-scheduler.cpp
+)
+target_include_directories(obs-captions-core-tests PRIVATE ../third_party ..)
 target_link_libraries(obs-captions-core-tests PRIVATE obs-captions-core)
 if(MSVC)
   target_compile_options(obs-captions-core-tests PRIVATE /W4 /WX /utf-8)
