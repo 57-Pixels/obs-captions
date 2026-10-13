@@ -59,6 +59,17 @@ TEST_CASE("nothing is emitted when the text is unchanged")
 	CHECK_FALSE(s.tick(3000, stats).has_value());
 }
 
+TEST_CASE("old segments are trimmed in batches")
+{
+	Config cfg;
+	Scheduler s(cfg.formatter, cfg.scheduler);
+	for (size_t i = 0; i < Scheduler::max_segments; i++)
+		s.commit("w", "", static_cast<int64_t>(i));
+	CHECK(s.segment_count() == Scheduler::max_segments);
+	s.commit("w", "", 100);
+	CHECK(s.segment_count() == Scheduler::max_segments + 1 - Scheduler::trim_batch);
+}
+
 TEST_CASE("sanitize clamps configuration")
 {
 	Config c;

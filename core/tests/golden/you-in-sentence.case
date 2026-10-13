@@ -3,6 +3,7 @@
 # - "you" right after a sentence is kept (not isolated before).
 # - "thank you" followed within 2 s by more speech is released and shown.
 # - "I told you so" is never a candidate (more than the blocklisted text).
+config hallucination_filter=1
 ticks 100 25000
 at 1000 final "are you ready" start=200 end=1000
 at 1700 final "you" start=1500 end=1700

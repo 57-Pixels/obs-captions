@@ -30,6 +30,13 @@ Hypothesis final_hyp(const std::string &text, int64_t start, int64_t end)
 
 constexpr int64_t no_speech = -1000000;
 
+FilterConfig with_hallucination_filter()
+{
+	FilterConfig cfg;
+	cfg.hallucination_filter = true;
+	return cfg;
+}
+
 } // namespace
 
 TEST_CASE("normalize")
@@ -82,6 +89,19 @@ TEST_CASE("repeat filter suppresses the third near-duplicate final")
 	CHECK_FALSE(f.suppress("gg", 5000, 5500));
 }
 
+TEST_CASE("an exact re-sent final is dropped at the second copy")
+{
+	FilterConfig cfg;
+	RepeatFilter f(cfg);
+	CHECK_FALSE(f.suppress("gg ez", 0, 800));
+	CHECK(f.suppress("GG ez", 500, 900)); /* overlaps: engine re-send */
+	/* The re-send does not count as speech: saying it again later is the
+	 * 2nd real occurrence, which is still shown. */
+	CHECK_FALSE(f.suppress("gg ez", 2500, 3000));
+	/* Overlapping but different words are not a re-send. */
+	CHECK_FALSE(f.suppress("gg well played", 2900, 3500));
+}
+
 TEST_CASE("repeat run resets after the window")
 {
 	FilterConfig cfg;
@@ -91,9 +111,17 @@ TEST_CASE("repeat run resets after the window")
 	CHECK_FALSE(f.suppress("gg", 1500 + cfg.repeat_window_ms + 1, 20000));
 }
 
-TEST_CASE("hallucination candidates are whole short blocklist matches")
+TEST_CASE("hallucination filter is off by default")
 {
 	FilterConfig cfg;
+	CHECK_FALSE(cfg.hallucination_filter);
+	HallucinationFilter f(cfg);
+	CHECK_FALSE(f.is_candidate("Thank you."));
+}
+
+TEST_CASE("hallucination candidates are whole short blocklist matches")
+{
+	FilterConfig cfg = with_hallucination_filter();
 	HallucinationFilter f(cfg);
 	CHECK(f.is_candidate("you"));
 	CHECK(f.is_candidate("Thank you."));
@@ -114,7 +142,7 @@ TEST_CASE("hallucination candidates are whole short blocklist matches")
 
 TEST_CASE("isolated candidate is held then dropped")
 {
-	FilterConfig cfg;
+	FilterConfig cfg = with_hallucination_filter();
 	HallucinationFilter f(cfg);
 	bool dropped = false;
 	CHECK(f.on_final(final_hyp("you", 10000, 10300), no_speech, &dropped).empty());
@@ -126,7 +154,7 @@ TEST_CASE("isolated candidate is held then dropped")
 
 TEST_CASE("candidate after recent speech is accepted at once")
 {
-	FilterConfig cfg;
+	FilterConfig cfg = with_hallucination_filter();
 	HallucinationFilter f(cfg);
 	bool dropped = false;
 	auto out = f.on_final(final_hyp("you", 1500, 1700), 1000, &dropped);
@@ -136,7 +164,7 @@ TEST_CASE("candidate after recent speech is accepted at once")
 
 TEST_CASE("held candidate is released by following speech")
 {
-	FilterConfig cfg;
+	FilterConfig cfg = with_hallucination_filter();
 	HallucinationFilter f(cfg);
 	bool dropped = false;
 	CHECK(f.on_final(final_hyp("thank you", 10000, 10500), no_speech, &dropped).empty());
@@ -149,7 +177,7 @@ TEST_CASE("held candidate is released by following speech")
 
 TEST_CASE("held candidate is released by a speech partial")
 {
-	FilterConfig cfg;
+	FilterConfig cfg = with_hallucination_filter();
 	HallucinationFilter f(cfg);
 	bool dropped = false;
 	CHECK(f.on_final(final_hyp("thank you", 10000, 10500), no_speech, &dropped).empty());
@@ -162,7 +190,7 @@ TEST_CASE("held candidate is released by a speech partial")
 
 TEST_CASE("held candidate is dropped when the next speech is too late")
 {
-	FilterConfig cfg;
+	FilterConfig cfg = with_hallucination_filter();
 	HallucinationFilter f(cfg);
 	bool dropped = false;
 	CHECK(f.on_final(final_hyp("thank you", 10000, 10500), no_speech, &dropped).empty());

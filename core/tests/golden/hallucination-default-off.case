@@ -1,0 +1,9 @@
+# The silence-artifact filter is off by default: the default engine is a
+# streaming model, not Whisper, so a lone "Thank you." is real speech and
+# is shown at once, with no hold-back delay.
+ticks 100 16000
+at 10600 final "Thank you." start=10000 end=10600
+---
+10600 "Thank you."
+14600 ""
+stat suppressed.hallucination 0

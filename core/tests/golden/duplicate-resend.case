@@ -1,0 +1,11 @@
+# An engine that re-sends the same final (same words, overlapping time) is
+# dropped at the 2nd copy. The same words spoken again later are not.
+ticks 100 9000
+at 800 final "gg ez" start=0 end=800
+at 900 final "GG ez" start=500 end=900
+at 3000 final "gg ez" start=2500 end=3000
+---
+800 "gg ez"
+3000 "gg ez gg ez"
+7000 ""
+stat suppressed.repeat 1
