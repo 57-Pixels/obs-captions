@@ -73,7 +73,6 @@ Why a process ([ADR 0001](adr/0001-separate-engine-process.md)):
                                     v
                     libobs caption FIFO -> CEA-608 in video SEI/OBU -> Twitch
 
- Optional, documented only: TTS/VTuber app --WebSocket--> text events --> core
 ```
 
 ## Threading rules

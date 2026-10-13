@@ -80,20 +80,3 @@ treats it as silence and reports it in `status`.
 
 Each control message gets `{"type":"ack","for":"<type>","ok":true}` or an
 `error` event.
-
-## Text input for TTS / VTuber apps (documented only, not implemented)
-
-A localhost WebSocket lets an app that *knows* the exact spoken line push it
-directly. These lines bypass ASR and take priority in the scheduler while
-their estimated duration is active.
-
-- Endpoint: `ws://127.0.0.1:<port>/simple-local-captions/v0` (port configurable,
-  default off). Bound to loopback only; requires a token shown in the dock.
-- Message:
-  ```json
-  {"text":"Thanks for the raid!","start_time":1234.56,
-   "est_duration":2.4,"speaker":"Mika"}
-  ```
-  `start_time`: seconds, sender clock (the plugin uses receive time if it is
-  more than 1 s off); `est_duration`: seconds; `speaker`: optional.
-- Handled by the plugin, not the engine; delivered to core as a text event.

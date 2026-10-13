@@ -10,12 +10,15 @@ harness decides which ASR backend ships (ADR 0002) and catches regressions.
   silence, accents. Only clips whose license allows redistribution, or
   private clips kept out of the repo.
 - A "silence and music" set whose reference is empty.
+- A slang/casual-speech set with references written as spoken, not
+  corrected, so the harness can catch models that normalize speech.
 
 ## Metrics (per backend, per clip, plus p50/p95)
 
 | Metric | Target for the default tier |
 |--------|-----------------------------|
 | WER on gamer audio | report; lower is better |
+| Verbatim rate: casual/slang phrases kept as said ("wuz up", "gonna") | report; models that rewrite speech into formal text lose points |
 | Captions emitted on silence/music clips | **0** |
 | Caption lag (speech end to caption shown), p95 | < 2.5 s |
 | Engine CPU % on a 6-core laptop | < 15 % average |

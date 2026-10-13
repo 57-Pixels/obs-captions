@@ -22,9 +22,6 @@ items move to "Resolved" with the decision, so the reasoning is kept.
 
 ### Caption behaviour (core/)
 
-6. **ASR during TTS.** While a TTS line is active, ASR hypotheses are dropped
-   (counted as `tts_active`). Should they instead be shown after the TTS line
-   ends?
 7. **Hallucination blocklist languages.** v1 blocklist is English only. Which
    other Latin-script languages need lists, if the filter is ever enabled?
 8. **"Short" in the hallucination rule** (matters only when the filter is
@@ -61,8 +58,14 @@ items move to "Resolved" with the decision, so the reasoning is kept.
 15. **Long monologues** (2026-10-13): old segments are trimmed in batches of
     16 (when more than 64 are kept), so text re-wraps rarely.
 16. **Maximum rows** (2026-10-13): 4 is enough; good timing matters more.
-14. **TTS lines and the word list** (2026-10-13): no. TTS lines are shown
-    exactly as the app sends them; their spelling is part of the streamer's
-    personality. The word list only applies to recognized speech from real
-    people. (TTS lines still get the optional profanity mask and conversion
-    to the 608 character set, which the screen needs.)
+6. **TTS / VTuber text input** (2026-10-13): removed. The project is
+   speech-to-text for real people only; exact lines from TTS or VTuber apps
+   are out of scope. (This also settles the old questions on ASR during TTS
+   and on applying the word list to TTS lines.) The word list stays: it
+   fixes recognition mistakes in real speech, such as game names.
+18. **Keep speech as said** (2026-10-13): captions never "correct" how a
+    streamer talks; how someone says things is part of their personality
+    (e.g. "wuz up" must not become "what's up"). core/ changes no wording on
+    its own: the word list is empty by default and only applies entries the
+    streamer adds. Engine choice (phase 4) must prefer verbatim output over
+    models that normalize casual speech; see eval/README.md.
