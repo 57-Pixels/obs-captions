@@ -73,6 +73,8 @@ jobs:
 
   macos-build:
     name: Build for macOS 🍏
+    # obs-captions: Windows x64 only for now; kept for later (README roadmap).
+    if: false
     runs-on: macos-15
     needs: check-event
     defaults:
@@ -177,6 +179,8 @@ jobs:
 
   ubuntu-build:
     name: Build for Ubuntu 🐧
+    # obs-captions: Windows x64 only for now; kept for later (README roadmap).
+    if: false
     strategy:
       matrix:
         os: [ubuntu-24.04]
@@ -295,3 +299,19 @@ jobs:
         with:
           name: ${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-windows-x64-${{ needs.check-event.outputs.commitHash }}
           path: ${{ github.workspace }}/release/${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-windows-x64*.*
+
+  core-tests:
+    name: Core Tests 🧪
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and Run Core Tests 🧪
+        run: |
+          # Build and Run Core Tests 🧪
+          cmake -S core -B build_core
+          cmake --build build_core --config Debug
+          ctest --test-dir build_core -C Debug --output-on-failure
