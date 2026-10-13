@@ -54,8 +54,8 @@ documented decisions beat cleverness.
 ## Useful commands (Windows)
 
 ```
-cmake --preset windows-x64
-cmake --build --preset windows-x64
+cmake --preset windows-x64-vs2026
+cmake --build --preset windows-x64-vs2026
 cmake -S core -B build_core
 cmake --build build_core --config Debug
 ctest --test-dir build_core -C Debug --output-on-failure

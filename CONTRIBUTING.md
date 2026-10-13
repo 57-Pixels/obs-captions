@@ -5,36 +5,20 @@ Thanks for helping streamers caption their streams. Read
 
 ## Build (Windows x64)
 
-Requirements: Visual Studio 2022 with "Desktop development with C++"
-(or VS 2026, see below), CMake 3.28+, Git.
+Requirements: Visual Studio 2026 with "Desktop development with C++"
+(it bundles CMake 4.x), Git.
 
 ```
-cmake --preset windows-x64
-cmake --build --preset windows-x64
+cmake --preset windows-x64-vs2026
+cmake --build --preset windows-x64-vs2026
 ```
 
 The first configure downloads OBS 30.2.3 sources, obs-deps and Qt6 into
 `.deps/` and builds libobs (several minutes).
 
-**VS 2026 only:** the repository presets use the VS 2022 generator, like CI.
-With only VS 2026 installed (it bundles CMake 4.x), create a git-ignored
-`CMakeUserPresets.json`:
-
-```json
-{
-  "version": 8,
-  "configurePresets": [{
-    "name": "windows-x64-vs2026", "inherits": ["windows-x64"],
-    "generator": "Visual Studio 18 2026", "architecture": "x64",
-    "cacheVariables": {"CMAKE_SYSTEM_VERSION": "10.0.26100.0"}
-  }],
-  "buildPresets": [{"name": "windows-x64-vs2026",
-    "configurePreset": "windows-x64-vs2026", "configuration": "RelWithDebInfo"}]
-}
-```
-
-Use plain `x64` and set `CMAKE_SYSTEM_VERSION` to an installed Windows SDK.
-This builds with MSVC 14.5x; CI's VS 2022 build is the reference.
+CI builds with the template's Visual Studio 2022 preset (`windows-x64`,
+`windows-ci-x64`) on GitHub's `windows-2022` runner; that preset also works
+locally if you have VS 2022. Both produce compatible binaries.
 
 ## Test
 

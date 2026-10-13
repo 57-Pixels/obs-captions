@@ -15,7 +15,7 @@ ctest --test-dir build_core -C Debug --output-on-failure
 Hypothesis (partial/final) --+
                              |   TTS overlap? -> drop (tts_active)
                              v
-        word replacement -> hallucination filter (may hold up to 2 s)
+        word replacement -> hallucination filter (off by default)
                              v
      in-utterance repeat collapse -> repeat filter -> profanity mask
                              v
@@ -46,10 +46,10 @@ Every rule is documented in the header of the module that implements it.
 | `min_interval_ms` | 1000 | >= 100; also the `display_duration` sent to OBS |
 | `clear_after_ms` | 4000 | >= `min_interval_ms`, from the newest text's end time |
 | `show_stable_partial` | off | committed text only |
-| `repeat_threshold` | 3 | >= 2; the 3rd near-duplicate final in a row is dropped |
+| `repeat_threshold` | 3 | >= 2; the 3rd near-duplicate final in a row is dropped; exact re-sends are dropped at the 2nd copy |
 | `repeat_window_ms` | 10000 | gap that ends a repeat run |
 | `near_duplicate_ratio` | 0.2 | normalized edit distance |
-| `hallucination_filter` | on | |
+| `hallucination_filter` | off | for Whisper-style backends; see `docs/OPEN_QUESTIONS.md` |
 | `hallucination_max_words` | 8 | long enough for subtitle-credit phrases |
 | `hallucination_isolation_ms` | 2000 | silence needed before and after |
 | `word_replacements` | none | case-insensitive, whole word |
