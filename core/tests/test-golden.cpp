@@ -13,7 +13,6 @@
  *   ticks <step_ms> <until_ms>          tick(now) at every multiple of step
  *   at <ms> final "text" start=<ms> end=<ms> [speaker=<id>]
  *   at <ms> partial "text" start=<ms> end=<ms> stable=<bytes> [speaker=<id>]
- *   at <ms> tts "text" duration=<ms> [speaker=<id>]
  *   ---
  *   <ms> "expected caption text"         one line per CaptionUpdate
  *   stat <name> <value>                  checked after the last tick
@@ -46,7 +45,7 @@ using Args = std::multimap<std::string, std::string>;
 
 struct Event {
 	int64_t at = 0;
-	enum { final, partial, tts } type = final;
+	enum { final, partial } type = final;
 	std::string text;
 	Args args;
 };
@@ -177,8 +176,8 @@ Case load(const fs::path &path)
 			Event e;
 			std::string type;
 			in >> e.at >> type;
-			e.type = type == "final" ? Event::final : type == "partial" ? Event::partial : Event::tts;
-			REQUIRE_MESSAGE((type == "final" || type == "partial" || type == "tts"), "bad type " << type);
+			e.type = type == "final" ? Event::final : Event::partial;
+			REQUIRE_MESSAGE((type == "final" || type == "partial"), "bad type " << type);
 			size_t q = line.find('"');
 			REQUIRE(q != std::string::npos);
 			e.text = parse_quoted(line, q);
@@ -202,10 +201,6 @@ void push(CaptionPipeline &p, const Event &e)
 {
 	auto it = e.args.find("speaker");
 	std::string speaker = it == e.args.end() ? "" : it->second;
-	if (e.type == Event::tts) {
-		p.push(TextEvent{e.text, e.at, arg(e, "duration"), speaker});
-		return;
-	}
 	Hypothesis h;
 	h.kind = e.type == Event::final ? HypothesisKind::final : HypothesisKind::partial;
 	h.text = e.text;
