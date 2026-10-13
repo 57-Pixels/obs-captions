@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "formatter/transliterate.h"
@@ -8,7 +8,7 @@
 #include "formatter/charset-608.h"
 #include "formatter/utf8.h"
 
-namespace obscap {
+namespace slc {
 
 namespace {
 
@@ -84,4 +84,4 @@ Transliterated transliterate_608(std::string_view text)
 	return result;
 }
 
-} // namespace obscap
+} // namespace slc

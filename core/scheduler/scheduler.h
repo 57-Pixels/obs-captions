@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -29,11 +29,11 @@
 #include <string_view>
 #include <vector>
 
-#include "obscap/caption-update.h"
-#include "obscap/config.h"
-#include "obscap/stats.h"
+#include "slc/caption-update.h"
+#include "slc/config.h"
+#include "slc/stats.h"
 
-namespace obscap {
+namespace slc {
 
 /* The stable prefix of a partial, cut back to whole words. */
 std::string stable_words(std::string_view text, size_t stable_prefix_len);
@@ -72,4 +72,4 @@ private:
 	int64_t sent_newest_end_ms = 0;
 };
 
-} // namespace obscap
+} // namespace slc

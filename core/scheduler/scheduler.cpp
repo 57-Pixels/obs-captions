@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "scheduler/scheduler.h"
@@ -9,7 +9,7 @@
 
 #include "formatter/wrap.h"
 
-namespace obscap {
+namespace slc {
 
 namespace {
 
@@ -136,4 +136,4 @@ void Scheduler::reset()
 	sent_newest_end_ms = 0;
 }
 
-} // namespace obscap
+} // namespace slc

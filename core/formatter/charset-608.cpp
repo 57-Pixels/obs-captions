@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "formatter/charset-608.h"
@@ -10,7 +10,7 @@
 
 #include "formatter/charset-608-tables.h"
 
-namespace obscap {
+namespace slc {
 
 bool is_608_char(char32_t c)
 {
@@ -30,4 +30,4 @@ const char *fold_to_ascii(char32_t c)
 	return it->to;
 }
 
-} // namespace obscap
+} // namespace slc

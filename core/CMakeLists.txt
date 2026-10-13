@@ -6,29 +6,29 @@
 
 cmake_minimum_required(VERSION 3.28...3.30)
 
-project(obs-captions-core LANGUAGES CXX)
+project(simple-local-captions-core LANGUAGES CXX)
 
-option(OBS_CAPTIONS_CORE_TESTS "Build obs-captions core unit tests" ${PROJECT_IS_TOP_LEVEL})
+option(OBS_CAPTIONS_CORE_TESTS "Build simple-local-captions core unit tests" ${PROJECT_IS_TOP_LEVEL})
 
-add_library(obs-captions-core STATIC)
-target_compile_features(obs-captions-core PUBLIC cxx_std_17)
-set_target_properties(obs-captions-core PROPERTIES CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
-target_include_directories(obs-captions-core PUBLIC include PRIVATE .)
+add_library(simple-local-captions-core STATIC)
+target_compile_features(simple-local-captions-core PUBLIC cxx_std_17)
+set_target_properties(simple-local-captions-core PROPERTIES CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
+target_include_directories(simple-local-captions-core PUBLIC include PRIVATE .)
 if(MSVC)
-  target_compile_options(obs-captions-core PRIVATE /W4 /WX /utf-8)
+  target_compile_options(simple-local-captions-core PRIVATE /W4 /WX /utf-8)
 else()
-  target_compile_options(obs-captions-core PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  target_compile_options(simple-local-captions-core PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 
 target_sources(
-  obs-captions-core
+  simple-local-captions-core
   PRIVATE
-    include/obscap/caption-update.h
-    include/obscap/config.h
-    include/obscap/events.h
-    include/obscap/pipeline.h
-    include/obscap/stats.h
-    include/obscap/version.h
+    include/slc/caption-update.h
+    include/slc/config.h
+    include/slc/events.h
+    include/slc/pipeline.h
+    include/slc/stats.h
+    include/slc/version.h
     src/config.cpp
     src/pipeline.cpp
     src/version.cpp

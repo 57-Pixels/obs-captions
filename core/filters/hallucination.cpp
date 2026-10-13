@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "filters/hallucination.h"
@@ -9,7 +9,7 @@
 
 #include "filters/text-norm.h"
 
-namespace obscap {
+namespace slc {
 
 HallucinationFilter::HallucinationFilter(const FilterConfig &config)
 	: enabled(config.hallucination_filter),
@@ -85,4 +85,4 @@ void HallucinationFilter::reset()
 	held.reset();
 }
 
-} // namespace obscap
+} // namespace slc

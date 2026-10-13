@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -19,12 +19,12 @@
 #include <memory>
 #include <optional>
 
-#include "obscap/caption-update.h"
-#include "obscap/config.h"
-#include "obscap/events.h"
-#include "obscap/stats.h"
+#include "slc/caption-update.h"
+#include "slc/config.h"
+#include "slc/events.h"
+#include "slc/stats.h"
 
-namespace obscap {
+namespace slc {
 
 class CaptionPipeline {
 public:
@@ -51,4 +51,4 @@ private:
 	std::unique_ptr<Impl> impl;
 };
 
-} // namespace obscap
+} // namespace slc

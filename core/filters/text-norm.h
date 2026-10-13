@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -11,7 +11,7 @@
 #include <string>
 #include <string_view>
 
-namespace obscap {
+namespace slc {
 
 /*
  * Lowercase ASCII, turn every ASCII character that is not a letter or digit
@@ -31,4 +31,4 @@ bool is_word_byte(char c);
 /* ASCII-only lowercase copy. */
 std::string to_lower_ascii(std::string_view text);
 
-} // namespace obscap
+} // namespace slc

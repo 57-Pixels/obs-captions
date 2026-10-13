@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "filters/profanity.h"
@@ -9,7 +9,7 @@
 
 #include "filters/text-norm.h"
 
-namespace obscap {
+namespace slc {
 
 std::string mask_profanity(std::string_view text, const std::vector<std::string> &words)
 {
@@ -32,4 +32,4 @@ std::string mask_profanity(std::string_view text, const std::vector<std::string>
 	return out;
 }
 
-} // namespace obscap
+} // namespace slc

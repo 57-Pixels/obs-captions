@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "filters/text-norm.h"
@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <vector>
 
-namespace obscap {
+namespace slc {
 
 bool is_word_byte(char c)
 {
@@ -70,4 +70,4 @@ double edit_ratio(std::string_view a, std::string_view b)
 	return static_cast<double>(prev[b.size()]) / static_cast<double>(longest);
 }
 
-} // namespace obscap
+} // namespace slc

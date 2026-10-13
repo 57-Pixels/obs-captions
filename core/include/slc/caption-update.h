@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <string>
 
-namespace obscap {
+namespace slc {
 
 /*
  * One caption update for plugin/src/caption-out.c. text holds 1..rows lines
@@ -23,4 +23,4 @@ struct CaptionUpdate {
 	int64_t display_duration_ms = 0;
 };
 
-} // namespace obscap
+} // namespace slc

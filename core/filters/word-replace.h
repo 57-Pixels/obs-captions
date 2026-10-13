@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -16,8 +16,8 @@
 #include <utility>
 #include <vector>
 
-namespace obscap {
+namespace slc {
 
 std::string replace_words(std::string_view text, const std::vector<std::pair<std::string, std::string>> &rules);
 
-} // namespace obscap
+} // namespace slc

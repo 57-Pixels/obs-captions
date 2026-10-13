@@ -1,15 +1,15 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-#include "obscap/config.h"
+#include "slc/config.h"
 
 #include <algorithm>
 
-#include "obscap/stats.h"
+#include "slc/stats.h"
 
-namespace obscap {
+namespace slc {
 
 std::vector<std::string> default_hallucination_blocklist()
 {
@@ -79,4 +79,4 @@ const char *suppress_reason_name(SuppressReason reason)
 	return "unknown";
 }
 
-} // namespace obscap
+} // namespace slc

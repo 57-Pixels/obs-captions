@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "filters/repeat.h"
@@ -9,7 +9,7 @@
 
 #include "filters/text-norm.h"
 
-namespace obscap {
+namespace slc {
 
 namespace {
 
@@ -108,4 +108,4 @@ void RepeatFilter::reset()
 	run = 0;
 }
 
-} // namespace obscap
+} // namespace slc

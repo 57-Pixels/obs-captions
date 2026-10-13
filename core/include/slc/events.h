@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <string>
 
-namespace obscap {
+namespace slc {
 
 enum class HypothesisKind { partial, final };
 
@@ -37,4 +37,4 @@ struct TextEvent {
 	std::string speaker; /* optional */
 };
 
-} // namespace obscap
+} // namespace slc

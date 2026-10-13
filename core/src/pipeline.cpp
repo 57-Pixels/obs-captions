@@ -1,9 +1,9 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-#include "obscap/pipeline.h"
+#include "slc/pipeline.h"
 
 #include <algorithm>
 #include <limits>
@@ -16,7 +16,7 @@
 #include "formatter/transliterate.h"
 #include "scheduler/scheduler.h"
 
-namespace obscap {
+namespace slc {
 
 namespace {
 
@@ -160,4 +160,4 @@ const Config &CaptionPipeline::config() const
 	return impl->cfg;
 }
 
-} // namespace obscap
+} // namespace slc

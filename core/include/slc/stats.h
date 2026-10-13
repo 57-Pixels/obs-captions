@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -9,7 +9,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace obscap {
+namespace slc {
 
 enum class SuppressReason {
 	repeat,        /* (near-)duplicate final, see filters/repeat.h */
@@ -33,4 +33,4 @@ struct Stats {
 	uint64_t suppressed_by(SuppressReason reason) const { return suppressed[static_cast<size_t>(reason)]; }
 };
 
-} // namespace obscap
+} // namespace slc

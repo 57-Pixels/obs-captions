@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
@@ -34,10 +34,10 @@
 #include <string>
 #include <vector>
 
-#include "obscap/pipeline.h"
+#include "slc/pipeline.h"
 
 namespace fs = std::filesystem;
-using namespace obscap;
+using namespace slc;
 
 namespace {
 
@@ -271,7 +271,7 @@ void run(const fs::path &path)
 TEST_CASE("golden caption cases")
 {
 	std::vector<fs::path> cases;
-	for (const auto &entry : fs::directory_iterator(OBSCAP_GOLDEN_DIR))
+	for (const auto &entry : fs::directory_iterator(SLC_GOLDEN_DIR))
 		if (entry.path().extension() == ".case")
 			cases.push_back(entry.path());
 	std::sort(cases.begin(), cases.end());

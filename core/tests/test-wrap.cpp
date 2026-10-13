@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include <doctest/doctest.h>
@@ -10,7 +10,7 @@
 
 #include "formatter/wrap.h"
 
-using namespace obscap;
+using namespace slc;
 using Lines = std::vector<std::string>;
 
 TEST_CASE("wrap fills lines up to the column limit")

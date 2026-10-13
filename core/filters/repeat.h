@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -23,9 +23,9 @@
 #include <string>
 #include <string_view>
 
-#include "obscap/config.h"
+#include "slc/config.h"
 
-namespace obscap {
+namespace slc {
 
 std::string collapse_repeats(std::string_view text, int threshold);
 
@@ -46,4 +46,4 @@ private:
 	int run = 0;
 };
 
-} // namespace obscap
+} // namespace slc

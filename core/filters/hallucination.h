@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -26,10 +26,10 @@
 #include <string_view>
 #include <vector>
 
-#include "obscap/config.h"
-#include "obscap/events.h"
+#include "slc/config.h"
+#include "slc/events.h"
 
-namespace obscap {
+namespace slc {
 
 class HallucinationFilter {
 public:
@@ -64,4 +64,4 @@ private:
 	std::optional<Hypothesis> held;
 };
 
-} // namespace obscap
+} // namespace slc

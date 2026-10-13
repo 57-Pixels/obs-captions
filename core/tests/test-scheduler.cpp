@@ -1,15 +1,15 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include <doctest/doctest.h>
 
-#include "obscap/config.h"
-#include "obscap/pipeline.h"
+#include "slc/config.h"
+#include "slc/pipeline.h"
 #include "scheduler/scheduler.h"
 
-using namespace obscap;
+using namespace slc;
 
 TEST_CASE("stable_words keeps whole words only")
 {

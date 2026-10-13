@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #pragma once
@@ -19,7 +19,7 @@
 #include <string_view>
 #include <vector>
 
-namespace obscap {
+namespace slc {
 
 constexpr size_t caption_max_bytes = 128; /* libobs CAPTION_LINE_BYTES */
 
@@ -33,4 +33,4 @@ std::vector<std::string> wrap_paragraph(std::string_view text, int cols);
 std::string layout(const std::vector<std::string> &paragraphs, int cols, int rows,
 		   size_t max_bytes = caption_max_bytes);
 
-} // namespace obscap
+} // namespace slc

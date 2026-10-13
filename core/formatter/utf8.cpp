@@ -1,11 +1,11 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "formatter/utf8.h"
 
-namespace obscap::utf8 {
+namespace slc::utf8 {
 
 namespace {
 
@@ -96,4 +96,4 @@ size_t length(std::string_view text)
 	return n;
 }
 
-} // namespace obscap::utf8
+} // namespace slc::utf8

@@ -1,13 +1,13 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "formatter/wrap.h"
 
 #include "formatter/utf8.h"
 
-namespace obscap {
+namespace slc {
 
 namespace {
 
@@ -157,4 +157,4 @@ std::string layout(const std::vector<std::string> &paragraphs, int cols, int row
 	return out;
 }
 
-} // namespace obscap
+} // namespace slc

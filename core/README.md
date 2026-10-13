@@ -29,7 +29,7 @@ TextEvent (TTS) ---------> scheduler: latest-wins slot, rolling window,
 
 | Where | What |
 |-------|------|
-| `include/obscap/` | Public API: `CaptionPipeline`, events, `Config`, `Stats` |
+| `include/slc/` | Public API: `CaptionPipeline`, events, `Config`, `Stats` |
 | `formatter/` | UTF-8, 608 character set, transliteration, wrapping |
 | `filters/` | Word list, hallucination, repeat, profanity |
 | `scheduler/` | Latest-wins scheduler |
