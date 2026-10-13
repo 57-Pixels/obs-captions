@@ -15,16 +15,28 @@
 /* LOG_INFO: libobs/util/base.h (via obs-module.h) */
 #include <plugin-support.h>
 
+#include "caption-out.h"
+#include "frontend.h"
+#include "ui/caption-dock.h"
+
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
 bool obs_module_load(void)
 {
+	if (!caption_out_init())
+		return false;
+	frontend_init();
+	if (!caption_dock_create())
+		obs_log(LOG_WARNING, "could not add the Captions dock");
+
 	obs_log(LOG_INFO, "loaded (version %s)", PLUGIN_VERSION);
 	return true;
 }
 
 void obs_module_unload(void)
 {
+	frontend_shutdown();
+	caption_out_shutdown();
 	obs_log(LOG_INFO, "unloaded");
 }
