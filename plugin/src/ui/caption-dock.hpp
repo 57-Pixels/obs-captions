@@ -9,11 +9,16 @@
  * Caption dock (Qt). Created and touched only on the Qt UI thread. All
  * user-facing strings come from data/locale via obs_module_text.
  *
- * Phase 2 contents: "Send test caption" (cycles through test captions that
- * check plain text and CEA-608 accented characters on Twitch) and "Clear
- * captions" (checks whether an empty caption clears the screen).
+ * Contents:
+ * - Preview: shows every caption caption-out.c sends, laid out as the CC
+ *   rows viewers see, even when nothing is streaming or recording.
+ * - "Send test caption": cycles through test captions (plain text, CEA-608
+ *   accented characters and symbols).
+ * - "Clear captions": sends an empty caption.
+ * - Status: where the last caption went (preview only, stream, recording).
  */
 
+#include <QString>
 #include <QWidget>
 
 class QLabel;
@@ -21,12 +26,15 @@ class QLabel;
 class CaptionDock : public QWidget {
 public:
 	explicit CaptionDock(QWidget *parent = nullptr);
+	~CaptionDock() override;
 
 private:
+	static void on_caption_sent(const char *text, unsigned sent_flags, void *data);
+	void show_caption(const QString &text, unsigned sent_flags);
 	void send_test_caption();
 	void clear_captions();
-	void show_result(bool sent, const char *sent_key);
 
+	QLabel *preview;
 	QLabel *status;
 	int next_test = 0;
 };
