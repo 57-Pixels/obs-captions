@@ -8,6 +8,11 @@ add_library(plugin-support STATIC)
 target_sources(plugin-support PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/plugin-support.c" PUBLIC src/plugin-support.h)
 target_include_directories(plugin-support PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
+# The captions dock needs Qt and obs-frontend-api (both on in CMakePresets).
+if(NOT ENABLE_QT OR NOT ENABLE_FRONTEND_API)
+  message(FATAL_ERROR "simple-local-captions requires ENABLE_QT=ON and ENABLE_FRONTEND_API=ON")
+endif()
+
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
@@ -46,7 +51,7 @@ target_sources(
 )
 
 if(ENABLE_QT)
-  target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/ui/caption-dock.cpp src/ui/caption-dock.hpp)
+  target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/ui/caption-dock.cpp src/ui/caption-dock.h src/ui/caption-dock.hpp)
 endif()
 
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})
