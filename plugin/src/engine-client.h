@@ -1,13 +1,13 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #pragma once
 
 /*
- * Engine client: launches the obs-captions-engine process, speaks the named
+ * Engine client: launches the simple-local-captions-engine process, speaks the named
  * pipe protocol in protocol/PROTOCOL.md, forwards audio frames from the ring
  * buffer and hands hypothesis events to the core caption pipeline.
  *

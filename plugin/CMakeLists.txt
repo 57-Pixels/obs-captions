@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-# Template plugin-support library (obs_log with "[obs-captions]" prefix). The
+# Template plugin-support library (obs_log with "[simple-local-captions]" prefix). The
 # template creates it from ./src in cmake/common/helpers_common.cmake; that
 # check runs from the repository root, so it is set up here instead.
 configure_file(src/plugin-support.c.in plugin-support.c @ONLY)
