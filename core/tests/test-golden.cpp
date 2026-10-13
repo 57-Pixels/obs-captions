@@ -41,11 +41,14 @@ using namespace obscap;
 
 namespace {
 
+/* Repeated keys are allowed (several replace=from:to rules). */
+using Args = std::multimap<std::string, std::string>;
+
 struct Event {
 	int64_t at = 0;
 	enum { final, partial, tts } type = final;
 	std::string text;
-	std::map<std::string, std::string> args;
+	Args args;
 };
 
 struct Case {
@@ -91,19 +94,19 @@ std::string parse_quoted(const std::string &in, size_t &pos)
 	return out;
 }
 
-std::map<std::string, std::string> parse_args(std::istringstream &in)
+Args parse_args(std::istringstream &in)
 {
-	std::map<std::string, std::string> args;
+	Args args;
 	std::string kv;
 	while (in >> kv) {
 		size_t eq = kv.find('=');
 		REQUIRE_MESSAGE(eq != std::string::npos, "bad argument: " << kv);
-		args[kv.substr(0, eq)] = kv.substr(eq + 1);
+		args.emplace(kv.substr(0, eq), kv.substr(eq + 1));
 	}
 	return args;
 }
 
-void apply_config(Config &c, const std::map<std::string, std::string> &args)
+void apply_config(Config &c, const Args &args)
 {
 	for (const auto &[key, value] : args) {
 		if (key == "cols")
@@ -197,7 +200,8 @@ int64_t arg(const Event &e, const char *name, int64_t fallback = 0)
 
 void push(CaptionPipeline &p, const Event &e)
 {
-	std::string speaker = e.args.count("speaker") ? e.args.at("speaker") : "";
+	auto it = e.args.find("speaker");
+	std::string speaker = it == e.args.end() ? "" : it->second;
 	if (e.type == Event::tts) {
 		p.push(TextEvent{e.text, e.at, arg(e, "duration"), speaker});
 		return;
