@@ -54,7 +54,7 @@ invoke_formatter() {
         exit 2
       fi
 
-      # obs-captions: format all first-party source trees, not just src/.
+      # simple-local-captions: format all first-party source trees, not just src/.
       if (( ! #source_files )) source_files=((plugin|core|engine)/**/*.(c|cpp|h|hpp|m|mm)(.N))
 
       local -a format_args=(-style=file -fallback-style=none)
