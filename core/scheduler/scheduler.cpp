@@ -13,11 +13,6 @@ namespace slc {
 
 namespace {
 
-/* Older segments are dropped beyond this many; they are long off screen
- * unless finals are tiny. Bounds memory and layout cost during a monologue
- * without a pause. */
-constexpr size_t max_segments = 64;
-
 std::string trim_right(std::string s)
 {
 	while (!s.empty() && s.back() == ' ')
@@ -59,7 +54,7 @@ void Scheduler::commit(const std::string &text, const std::string &speaker, int6
 	if (!speaker.empty())
 		last_speaker = speaker;
 	if (segments.size() > max_segments)
-		segments.erase(segments.begin());
+		segments.erase(segments.begin(), segments.begin() + trim_batch);
 }
 
 void Scheduler::set_partial(const std::string &text, const std::string &speaker, int64_t t_end_ms)

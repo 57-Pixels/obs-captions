@@ -40,6 +40,15 @@ std::string stable_words(std::string_view text, size_t stable_prefix_len);
 
 class Scheduler {
 public:
+	/*
+	 * Committed text is kept as at most max_segments segments. When that is
+	 * exceeded, the oldest trim_batch segments are dropped at once (they are
+	 * long off screen), so the remaining text re-wraps rarely, not on every
+	 * new final.
+	 */
+	static constexpr size_t max_segments = 64;
+	static constexpr size_t trim_batch = 16;
+
 	Scheduler(const FormatterConfig &formatter, const SchedulerConfig &scheduler);
 
 	/* text must already be filtered and transliterated. */
@@ -49,6 +58,8 @@ public:
 
 	std::optional<CaptionUpdate> tick(int64_t now_ms, Stats &stats);
 	void reset();
+
+	size_t segment_count() const { return segments.size(); }
 
 private:
 	struct Segment {
