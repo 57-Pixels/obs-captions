@@ -8,17 +8,24 @@ stream and no Twitch account.
 1. Install the plugin: copy the `simple-local-captions` folder from a build
    (`cmake --install build_x64 --config RelWithDebInfo --prefix dist`, or
    the Windows artifact of a CI run) into `C:\ProgramData\obs-studio\plugins\`.
-2. Start OBS. Open **Docks > Captions** if the dock is not visible.
+2. Start OBS. Right-click your microphone in the Audio Mixer (or any audio
+   source) > **Filters** > **+** > **Simple Local Captions**.
+3. Open **Docks > Captions** to see the caption preview.
 
-## Level 1: preview only (10 seconds)
+## Level 1: filter and preview (1 minute)
+
+In the filter's settings (Filters window, select Simple Local Captions):
 
 | Do | Expect |
 |----|--------|
-| Press **Send test caption** | The black preview box shows "Simple Local Captions test" / "Captions are working!"; status says "Shown in the preview only" |
+| Speak, then press **Refresh status** | "Hearing audio from <your mic> (loudest: -NN dB)". Louder speech gives a number closer to 0 |
+| Mute the mic, press **Refresh status** | "...arriving but silent" (or "No audio" if OBS stops sending it) |
+| Press **Send test caption** | Dock preview shows "Simple Local Captions test" / "Captions are working!"; the filter says "Shown in the Captions dock preview only" |
 | Press it again | "Accents: café niño über" / "Symbols: ♪ © ½ ¿Sí?" |
-| Press **Clear captions** | The preview box empties |
+| Press **Clear captions** | The dock preview empties |
 
-This checks the dock and the caption text, not the video encoding.
+This checks that the filter sits on the right source and that captions are
+produced. It does not check the video encoding.
 
 ## Level 2: local recording (2 minutes, real CEA-608)
 

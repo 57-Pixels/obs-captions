@@ -13,9 +13,9 @@ The only code that talks to OBS. It does as little as possible:
 | Module            | Responsibility                                              |
 |-------------------|-------------------------------------------------------------|
 | `plugin-main.c`   | Module load/unload and registration. Nothing else.          |
-| `audio-tap.c`     | Copy audio from the chosen source into an SPSC ring buffer. |
+| `audio-tap.c`     | "Simple Local Captions" audio filter on the mic; feeds an SPSC ring buffer. |
 | `engine-client.c` | Run the engine process, stream audio, receive events.       |
-| `caption-out.c`   | The **only** caller of `obs_output_output_caption_text2`.   |
+| `caption-out.c`   | The **only** caller of `obs_output_output_caption_text2` (stream + recording). |
 | `frontend.c`      | Stream start/stop events, health checks, re-arming state.   |
 | `ui/`             | Qt dock: one switch, plain-language status.                 |
 
@@ -52,8 +52,8 @@ Why a process ([ADR 0001](adr/0001-separate-engine-process.md)):
 ```
  OBS audio thread                 engine-client thread              engine.exe
  ----------------                 --------------------              ----------
- audio source
-   | (callback: copy + return)
+ mic source + "Simple Local Captions" filter
+   | (filter_audio: copy + return)
    v
  audio-tap.c --> [SPSC ring buffer] --> resample 16 kHz mono --pipe--> ASR backend
                                                                           |

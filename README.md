@@ -4,8 +4,9 @@ Live, local speech-to-text for OBS Studio on Windows, sent to Twitch as
 **native closed captions** (CEA-608, CC1) that viewers switch on with the CC
 button, including on phones watching muted.
 
-> Status: **early development.** The Captions dock can send test captions to
-> your stream; speech recognition is not connected yet. See the roadmap.
+> Status: **early development.** Add the "Simple Local Captions" filter to
+> your microphone to check audio and send test captions (preview, recording
+> or stream); speech recognition is not connected yet. See the roadmap.
 
 ## Why
 
