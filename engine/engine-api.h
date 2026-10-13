@@ -1,6 +1,6 @@
 /*
- * obs-captions
- * SPDX-FileCopyrightText: 2026 obs-captions contributors
+ * simple-local-captions
+ * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
@@ -16,7 +16,7 @@
 
 #include <cstdint>
 
-namespace obscap::engine {
+namespace slc::engine {
 
 constexpr std::uint32_t protocol_version = 0;
 constexpr std::uint32_t sample_rate_hz = 16000;
@@ -24,4 +24,4 @@ constexpr std::uint32_t channels = 1;
 
 enum class HypothesisKind { partial, final };
 
-} // namespace obscap::engine
+} // namespace slc::engine
