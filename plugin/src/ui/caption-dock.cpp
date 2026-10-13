@@ -22,38 +22,16 @@
 #include <plugin-support.h>
 
 #include "../caption-out.h"
+#include "../caption-test.h"
 
 namespace {
 
 constexpr const char *dock_id = "simple-local-captions-dock";
 
-/* Locale keys of the test captions, sent in turn. */
-constexpr const char *test_caption_keys[] = {
-	"CaptionsDock.TestCaption.Plain",
-	"CaptionsDock.TestCaption.Accents",
-};
-constexpr int test_caption_count = sizeof(test_caption_keys) / sizeof(test_caption_keys[0]);
-
-/* Long enough to read; the next update may follow after this time. */
-constexpr double test_display_s = 3.0;
-
 /* Preview size in caption cells: 608 rows are at most 32 characters, and
  * the core allows up to 4 rows. */
 constexpr int preview_cols = 32;
 constexpr int preview_rows = 4;
-
-const char *status_key(unsigned sent_flags)
-{
-	const bool stream = sent_flags & CAPTION_SENT_STREAM;
-	const bool recording = sent_flags & CAPTION_SENT_RECORDING;
-	if (stream && recording)
-		return "CaptionsDock.Status.StreamAndRecording";
-	if (stream)
-		return "CaptionsDock.Status.Stream";
-	if (recording)
-		return "CaptionsDock.Status.Recording";
-	return "CaptionsDock.Status.PreviewOnly";
-}
 
 } // namespace
 
@@ -73,8 +51,8 @@ CaptionDock::CaptionDock(QWidget *parent) : QWidget(parent)
 	/* Name = the caption text itself, so screen readers read the captions. */
 	preview->setAccessibleDescription(obs_module_text("CaptionsDock.Preview"));
 
-	auto *send = new QPushButton(obs_module_text("CaptionsDock.SendTest"), this);
-	auto *clear = new QPushButton(obs_module_text("CaptionsDock.Clear"), this);
+	auto *send = new QPushButton(obs_module_text("Test.Send"), this);
+	auto *clear = new QPushButton(obs_module_text("Test.Clear"), this);
 	status = new QLabel(obs_module_text("CaptionsDock.Status.Idle"), this);
 	status->setWordWrap(true);
 
@@ -109,20 +87,17 @@ void CaptionDock::on_caption_sent(const char *text, unsigned sent_flags, void *d
 void CaptionDock::show_caption(const QString &text, unsigned sent_flags)
 {
 	preview->setText(text);
-	status->setText(obs_module_text(status_key(sent_flags)));
+	status->setText(obs_module_text(caption_test_result_key(sent_flags)));
 }
 
 void CaptionDock::send_test_caption()
 {
-	caption_out_send(obs_module_text(test_caption_keys[next_test]), test_display_s);
-	obs_log(LOG_INFO, "test caption %d sent", next_test + 1);
-	next_test = (next_test + 1) % test_caption_count;
+	caption_test_send_next();
 }
 
 void CaptionDock::clear_captions()
 {
-	caption_out_send("", 1.0);
-	obs_log(LOG_INFO, "clear caption sent");
+	caption_test_clear();
 }
 
 bool caption_dock_create(void)

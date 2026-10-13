@@ -36,5 +36,4 @@ private:
 
 	QLabel *preview;
 	QLabel *status;
-	int next_test = 0;
 };
