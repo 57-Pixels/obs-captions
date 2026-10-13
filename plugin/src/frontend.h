@@ -6,8 +6,8 @@
 #pragma once
 
 /*
- * Frontend glue: reacts to stream start/stop (obs-frontend-api events, UI
- * thread). On every stream start it hands the current streaming output to
+ * Frontend glue: reacts to stream and recording start/stop (obs-frontend-api
+ * events, UI thread). On every start it hands the current output to
  * caption-out.c (libobs frees the caption queue when an output stops, so
  * state is re-armed each time); on stop it detaches it.
  *
