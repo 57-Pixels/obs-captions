@@ -43,8 +43,14 @@ struct FilterConfig {
 	/* Max normalized edit distance (0..1) for "near duplicate". */
 	double near_duplicate_ratio = 0.2;
 
-	/* Silence-artifact filter (see filters/hallucination.h for the rule). */
-	bool hallucination_filter = true;
+	/*
+	 * Silence-artifact filter (see filters/hallucination.h for the rule).
+	 * Off by default: streaming models rarely invent text on silence, and
+	 * the filter's hold-back delays or hides real short phrases. Meant for
+	 * Whisper-style backends; a voice-activity signal from the engine
+	 * should replace the timing rule later (docs/OPEN_QUESTIONS.md).
+	 */
+	bool hallucination_filter = false;
 	int hallucination_max_words = 8;
 	int64_t hallucination_isolation_ms = 2000;
 	std::vector<std::string> hallucination_blocklist;
