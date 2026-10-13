@@ -6,6 +6,14 @@
 !/build-aux
 !/cmake
 !/plugin
+!/core
+!/engine
+!/protocol
+!/eval
+!/installer
+!/docs
+!AGENTS.md
+!CONTRIBUTING.md
 !.clang-format
 !.gersemirc
 !.gitattributes
