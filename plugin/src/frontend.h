@@ -3,15 +3,16 @@
  * SPDX-FileCopyrightText: 2026 simple-local-captions contributors
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-
 #pragma once
 
 /*
- * Frontend glue: reacts to stream start/stop (obs-frontend-api events),
- * re-arms caption state on stream start and runs health checks that feed
- * plain-language status to the dock.
+ * Frontend glue: reacts to stream start/stop (obs-frontend-api events, UI
+ * thread). On every stream start it hands the current streaming output to
+ * caption-out.c (libobs frees the caption queue when an output stops, so
+ * state is re-armed each time); on stop it detaches it.
  *
- * Stub: no behaviour until roadmap phase 2.
+ * Later phases add health checks that feed plain-language status to the
+ * dock, and reset the core caption pipeline on stream start.
  */
 
 #include <stdbool.h>
