@@ -31,6 +31,22 @@ if(ENABLE_QT)
   )
 endif()
 
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/plugin-main.c)
+target_sources(
+  ${CMAKE_PROJECT_NAME}
+  PRIVATE
+    src/plugin-main.c
+    src/audio-tap.c
+    src/audio-tap.h
+    src/caption-out.c
+    src/caption-out.h
+    src/engine-client.c
+    src/engine-client.h
+    src/frontend.c
+    src/frontend.h
+)
+
+if(ENABLE_QT)
+  target_sources(${CMAKE_PROJECT_NAME} PRIVATE src/ui/caption-dock.cpp src/ui/caption-dock.hpp)
+endif()
 
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})
