@@ -1,59 +1,65 @@
-# OBS Plugin Template
+# obs-captions
 
-## Introduction
+Live, local speech-to-text for OBS Studio on Windows, sent to Twitch as
+**native closed captions** (CEA-608, CC1) that viewers switch on with the CC
+button, including on phones watching muted.
 
-The plugin template is meant to be used as a starting point for OBS Studio plugin development. It includes:
+> Status: **early development.** The plugin loads and logs; it does not
+> produce captions yet. See the roadmap.
 
-* Boilerplate plugin source code
-* A CMake project file
-* GitHub Actions workflows and repository actions
+## Why
 
-## Supported Build Environments
+Very few channels send captions. The tools that exist are hard to set up,
+cost frames, or show embarrassing output ("Thank you." on silence). The goal
+is an experience that just works: one switch, correct defaults,
+plain-language status, and an Advanced panel for power users.
 
-| Platform  | Tool   |
-|-----------|--------|
-| Windows   | Visual Studio 17 2022 |
-| macOS     | XCode 16.0 |
-| Windows, macOS  | CMake 3.30.5 |
-| Ubuntu 24.04 | CMake 3.28.3 |
-| Ubuntu 24.04 | `ninja-build` |
-| Ubuntu 24.04 | `pkg-config`
-| Ubuntu 24.04 | `build-essential` |
+- **Local only.** Speech recognition runs on the streamer's PC. No cloud.
+- **CPU-first.** Built for average streaming PCs and laptops; captions must
+  never cost the stream frames ([ADR 0002](docs/adr/0002-cpu-first-engine.md)).
+- **Isolated.** Recognition runs in its own process; if it crashes, the
+  stream keeps going ([ADR 0001](docs/adr/0001-separate-engine-process.md)).
 
-## Quick Start
+## Requirements
 
-An absolute bare-bones [Quick Start Guide](https://github.com/obsproject/obs-plugintemplate/wiki/Quick-Start-Guide) is available in the wiki.
+- Windows 10/11 x64
+- OBS Studio 30.2 or newer ([ADR 0006](docs/adr/0006-minimum-obs-version.md))
 
-## Documentation
+## Layout
 
-All documentation can be found in the [Plugin Template Wiki](https://github.com/obsproject/obs-plugintemplate/wiki).
+| Path | What |
+|------|------|
+| `plugin/` | Thin OBS plugin (C, Qt for the dock) |
+| `core/` | Caption logic: filters, formatter, scheduler. Pure C++17, no OBS |
+| `engine/` | Separate speech-recognition process |
+| `protocol/` | Plugin <-> engine protocol |
+| `eval/`, `installer/` | Plans for the evaluation harness and installer |
+| `docs/` | [Architecture](docs/ARCHITECTURE.md), [ADRs](docs/adr/), [dependencies](docs/DEPENDENCIES.md), [open questions](docs/OPEN_QUESTIONS.md) |
 
-Suggested reading to get up and running:
+## Roadmap
 
-* [Getting started](https://github.com/obsproject/obs-plugintemplate/wiki/Getting-Started)
-* [Build system requirements](https://github.com/obsproject/obs-plugintemplate/wiki/Build-System-Requirements)
-* [Build system options](https://github.com/obsproject/obs-plugintemplate/wiki/CMake-Build-System-Options)
+0. Scaffold from obs-plugintemplate; plugin loads (done)
+1. `core/` caption library with golden-file tests
+2. `caption-out` + "Send test caption" dock button (verify on Twitch desktop
+   and phone)
+3. `audio-tap` + ring buffer + `engine-client` against a fake engine that
+   replays recorded transcripts
+4. Engine process with the first real CPU streaming backend (chosen from
+   eval/ results)
+5. eval/ harness: gamer-audio WER, zero captions on silence, p95 lag, CPU %,
+   OBS dropped frames
+6. Simple dock UX, first-run sheet, health checks, post-stream summary
+7. Advanced panel, word list UI, model manager
+8. Signed installer, auto-update, model downloader
 
-## GitHub Actions & CI
+## Contributing
 
-Default GitHub Actions workflows are available for the following repository actions:
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md). Much of
+this code is AI-written, so this project is a standalone plugin and is not
+intended for inclusion in OBS Studio itself. It is structured so the
+OBS-facing parts are small enough to review or rewrite by hand.
 
-* `push`: Run for commits or tags pushed to `master` or `main` branches.
-* `pr-pull`: Run when a Pull Request has been pushed or synchronized.
-* `dispatch`: Run when triggered by the workflow dispatch in GitHub's user interface.
-* `build-project`: Builds the actual project and is triggered by other workflows.
-* `check-format`: Checks CMake and plugin source code formatting and is triggered by other workflows.
+## License
 
-The workflows make use of GitHub repository actions (contained in `.github/actions`) and build scripts (contained in `.github/scripts`) which are not needed for local development, but might need to be adjusted if additional/different steps are required to build the plugin.
-
-### Retrieving build artifacts
-
-Successful builds on GitHub Actions will produce build artifacts that can be downloaded for testing. These artifacts are commonly simple archives and will not contain package installers or installation programs.
-
-### Building a Release
-
-To create a release, an appropriately named tag needs to be pushed to the `main`/`master` branch using semantic versioning (e.g., `12.3.4`, `23.4.5-beta2`). A draft release will be created on the associated repository with generated installer packages or installation programs attached as release artifacts.
-
-## Signing and Notarizing on macOS
-
-Basic concepts of codesigning and notarization on macOS are explained in the correspodning [Wiki article](https://github.com/obsproject/obs-plugintemplate/wiki/Codesigning-On-macOS) which has a specific section for the [GitHub Actions setup](https://github.com/obsproject/obs-plugintemplate/wiki/Codesigning-On-macOS#setting-up-code-signing-for-github-actions).
+GPL-2.0-or-later. See [LICENSE](LICENSE). Every source file carries an SPDX
+header.
