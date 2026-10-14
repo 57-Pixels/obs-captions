@@ -34,7 +34,7 @@
 #include "caption-out.h"
 
 #define ENGINE_EXE L"simple-local-captions-engine.exe"
-#define MODEL_NAME L"sherpa-onnx-streaming-zipformer-en-2023-06-26"
+#define MODEL_NAME L"sherpa-onnx-streaming-zipformer-en-2023-06-21"
 #define LOOP_MS 20
 #define TICK_MS 100
 #define CONNECT_TIMEOUT_MS 15000

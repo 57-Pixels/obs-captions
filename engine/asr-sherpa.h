@@ -8,7 +8,7 @@
 /*
  * Streaming speech recognition with sherpa-onnx (CPU) and a streaming
  * zipformer transducer model directory, e.g.
- * sherpa-onnx-streaming-zipformer-en-2023-06-26. Feed 16 kHz mono audio;
+ * sherpa-onnx-streaming-zipformer-en-2023-06-21. Feed 16 kHz mono audio;
  * get partial and final results. Endpoint detection (a pause after speech)
  * turns the current partial into a final.
  */
