@@ -345,8 +345,10 @@ static void run_session(struct session *s)
 		}
 		if (w == WAIT_OBJECT_0) {
 			DWORD got = 0;
-			if (!GetOverlappedResult(s->pipe, &s->read_ov, &got, FALSE) || got == 0)
+			if (!GetOverlappedResult(s->pipe, &s->read_ov, &got, FALSE) || got == 0) {
+				obs_log(LOG_WARNING, "speech engine connection closed");
 				return;
+			}
 			handle_bytes(s, s->read_buf, got);
 			if (!start_read(s))
 				return;
