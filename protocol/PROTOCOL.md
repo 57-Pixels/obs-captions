@@ -1,13 +1,21 @@
 # Plugin <-> engine protocol, v0
 
-Status: draft, not implemented. Mirrors `engine/engine-api.h`.
+Status: v0 subset implemented (2026-10-13). Mirrors `engine/engine-api.h`.
+
+Implemented now: transport, hello / hello_ack, audio frames, hypothesis,
+status (`listening`), error (`model_missing`, `protocol`), and shutdown.
+Not yet: ping/pong heartbeat (the plugin instead watches the engine
+process handle and the pipe for EOF), `rtf`/`cpu_pct` in status, and the
+load_model / set_tier / set_word_list controls (the engine gets its model
+directory on the command line).
 
 ## Transport
 
-- Windows named pipe `\.\pipe\simple-local-captions-<plugin-pid>-<random>`, created
-  by the plugin (server) before it launches the engine; the name is passed
-  on the engine command line. One client only; the pipe ACL is limited to
-  the current user.
+- Windows named pipe `\\.\pipe\simple-local-captions-<plugin-pid>-<time>`,
+  created by the plugin (server) before it launches the engine; the name is
+  passed on the engine command line (`--pipe <name> --model <dir>`). One
+  instance only (`FILE_FLAG_FIRST_PIPE_INSTANCE`) and local clients only
+  (`PIPE_REJECT_REMOTE_CLIENTS`); default pipe ACL.
 - Duplex, byte mode. Two logical streams share it, distinguished by a
   1-byte frame type:
   - `0x01` **binary frame** (audio), plugin -> engine

@@ -36,6 +36,15 @@ it answers 4, 5 and 11, plus:
    artifact phrase, e.g. just "Thank you." and nothing else. The longest
    artifact phrases (subtitle credits) are 6 words, so the word limit is 8.
    Keep, or make it smaller?
+20. **One source or several.** Captions listen to one source at a time: the
+    first Simple Local Captions filter wins, others say so. Should captions
+    combine several sources (two mics, a co-host on Discord)?
+21. **Model installation until the installer exists.** The model is placed
+    by hand in `%LOCALAPPDATA%\simple-local-captions\models\`. OK for
+    testing; the installer (phase 8) must download and verify it.
+22. **Punctuation and casing.** The default model outputs no punctuation;
+    the engine only applies sentence case. Is that acceptable for v1, or is
+    a model with punctuation (larger, heavier) a requirement?
 17. **Voice-activity signal.** When the real engine exists (phase 4), it
     should report per hypothesis whether voice was detected, so the artifact
     filter can drop invented text without any timing delay. Field name and

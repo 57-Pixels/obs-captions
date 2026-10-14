@@ -5,8 +5,9 @@ Live, local speech-to-text for OBS Studio on Windows, sent to Twitch as
 button, including on phones watching muted.
 
 > Status: **early development.** Add the "Simple Local Captions" filter to
-> your microphone to check audio and send test captions (preview, recording
-> or stream); speech recognition is not connected yet. See the roadmap.
+> your microphone and captions appear live (dock preview, recordings, and
+> the stream's CC) from a local English speech model. The model is
+> installed by hand for now; see the roadmap.
 
 ## Why
 
@@ -43,10 +44,9 @@ plain-language status, and an Advanced panel for power users.
 1. `core/` caption library with golden-file tests (done)
 2. `caption-out` + "Send test caption" dock button (built; waiting for the
    Twitch desktop and phone check in docs/testing/captions.md)
-3. `audio-tap` + ring buffer + `engine-client` against a fake engine that
-   replays recorded transcripts
-4. Engine process with the first real CPU streaming backend (chosen from
-   eval/ results)
+3. `audio-tap` + ring buffer + `engine-client` (done, with the real engine)
+4. Engine process with the first real CPU streaming backend (first version
+   done: sherpa-onnx zipformer, ADR 0007; to be confirmed by eval/)
 5. eval/ harness: gamer-audio WER, zero captions on silence, p95 lag, CPU %,
    OBS dropped frames
 6. Simple dock UX, first-run sheet, health checks, post-stream summary
