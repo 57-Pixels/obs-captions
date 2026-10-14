@@ -38,7 +38,9 @@ namespace {
 
 constexpr const char *engine_version = "0.1.0";
 constexpr const char *backend_name = "sherpa-onnx-zipformer";
-constexpr int asr_threads = 2;
+/* One thread is as fast as two for this model (real-time factor ~0.12 on
+ * the test files) and avoids ONNX Runtime worker threads spinning. */
+constexpr int asr_threads = 1;
 
 struct Args {
 	std::string pipe;
