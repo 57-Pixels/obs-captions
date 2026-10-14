@@ -301,7 +301,7 @@ jobs:
           path: ${{ github.workspace }}/release/${{ steps.setup.outputs.pluginName }}-${{ steps.setup.outputs.pluginVersion }}-windows-x64*.*
 
   core-tests:
-    name: Core Tests 🧪
+    name: Core and Engine Tests 🧪
     runs-on: windows-2022
     defaults:
       run:
@@ -315,3 +315,6 @@ jobs:
           cmake -S core -B build_core
           cmake --build build_core --config Debug
           ctest --test-dir build_core -C Debug --output-on-failure
+          cmake -S engine/tests -B build_engine_tests
+          cmake --build build_engine_tests --config Debug
+          ctest --test-dir build_engine_tests -C Debug --output-on-failure
