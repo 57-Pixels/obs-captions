@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
+#include <filesystem>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -45,16 +46,28 @@ struct Args {
 	std::string test_wav;
 };
 
-Args parse_args(int argc, char **argv)
+std::string to_utf8(const wchar_t *w)
+{
+	int n = WideCharToMultiByte(CP_UTF8, 0, w, -1, nullptr, 0, nullptr, nullptr);
+	std::string out(n > 0 ? static_cast<size_t>(n - 1) : 0, '\0');
+	if (n > 1)
+		WideCharToMultiByte(CP_UTF8, 0, w, -1, out.data(), n, nullptr, nullptr);
+	return out;
+}
+
+/* wmain + UTF-8 so model paths under non-ASCII user names work. */
+Args parse_args(int argc, wchar_t **argv)
 {
 	Args a;
 	for (int i = 1; i + 1 < argc; i += 2) {
-		if (std::strcmp(argv[i], "--pipe") == 0)
-			a.pipe = argv[i + 1];
-		else if (std::strcmp(argv[i], "--model") == 0)
-			a.model = argv[i + 1];
-		else if (std::strcmp(argv[i], "--test-wav") == 0)
-			a.test_wav = argv[i + 1];
+		std::string key = to_utf8(argv[i]);
+		std::string value = to_utf8(argv[i + 1]);
+		if (key == "--pipe")
+			a.pipe = value;
+		else if (key == "--model")
+			a.model = value;
+		else if (key == "--test-wav")
+			a.test_wav = value;
 	}
 	return a;
 }
@@ -62,7 +75,7 @@ Args parse_args(int argc, char **argv)
 /* Minimal reader for 16 kHz mono PCM16 WAV files (the model's test files). */
 bool read_wav(const std::string &path, std::vector<float> &out)
 {
-	std::ifstream f(path, std::ios::binary);
+	std::ifstream f(std::filesystem::u8path(path), std::ios::binary);
 	std::vector<char> data((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
 	if (data.size() < 44 || std::memcmp(data.data(), "RIFF", 4) != 0)
 		return false;
@@ -154,7 +167,7 @@ int run_pipe(const Args &args)
 
 } // namespace
 
-int main(int argc, char **argv)
+int wmain(int argc, wchar_t **argv)
 {
 	Args args = parse_args(argc, argv);
 	if (args.model.empty() || (args.pipe.empty() && args.test_wav.empty())) {
