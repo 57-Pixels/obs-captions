@@ -16,11 +16,12 @@
 /* obs_properties_create, obs_properties_add_button, obs_properties_add_text,
  * obs_property_text_set_info_type, OBS_TEXT_INFO: libobs/obs-properties.h */
 #include <obs-properties.h>
-/* audio_output_get_channels: libobs/media-io/audio-io.h */
+/* audio_output_get_channels, audio_output_get_sample_rate:
+ * libobs/media-io/audio-io.h */
 #include <media-io/audio-io.h>
 /* os_gettime_ns: libobs/util/platform.h */
 #include <util/platform.h>
-/* os_atomic_set_long, os_atomic_load_long: libobs/util/threading.h */
+/* os_atomic_*: libobs/util/threading.h */
 #include <util/threading.h>
 /* bzalloc, bfree: libobs/util/bmem.h */
 #include <util/bmem.h>
@@ -28,15 +29,25 @@
 #include <plugin-support.h>
 
 #include "caption-test.h"
+#include "engine-client.h"
+#include "ring-buffer.h"
 
 #define FILTER_ID "simple_local_captions_filter"
 
 /* Audio counts as "arriving" if a block came within this many seconds. */
 #define AUDIO_RECENT_S 1
 
+/* 2^18 samples: about 5 s at 48 kHz, plenty for the engine client, which
+ * drains every 20 ms. */
+#define RING_CAPACITY (1u << 18)
+
+/* Mono mixdown chunk on the audio thread's stack. */
+#define MIX_CHUNK 256
+
 struct audio_tap {
 	obs_source_t *filter;
 	size_t channels;
+	long id;
 
 	/* Written by the audio thread, read by the UI thread. */
 	volatile long peak_milli;   /* peak sample of the last block x 1000 */
@@ -46,9 +57,21 @@ struct audio_tap {
 	const char *last_result_key;
 };
 
+/* Captions listen to one source at a time: the first filter instance owns
+ * the ring buffer (it has a single producer). 0 = no owner. */
+static volatile long owner_id;
+static volatile long next_id;
+static struct ring_buffer ring;
+static uint32_t sample_rate;
+
 static long now_s(void)
 {
 	return (long)(os_gettime_ns() / 1000000000ULL);
+}
+
+static bool is_owner(const struct audio_tap *tap)
+{
+	return os_atomic_load_long(&owner_id) == tap->id;
 }
 
 static const char *tap_get_name(void *type_data)
@@ -64,29 +87,60 @@ static void *tap_create(obs_data_t *settings, obs_source_t *filter)
 	tap->filter = filter;
 	tap->channels = audio_output_get_channels(obs_get_audio());
 	tap->last_audio_s = -1;
+	tap->id = os_atomic_inc_long(&next_id);
+
+	if (os_atomic_compare_swap_long(&owner_id, 0, tap->id)) {
+		obs_log(LOG_INFO, "captions now listen to this filter's source");
+		engine_client_start();
+	}
 	return tap;
 }
 
 static void tap_destroy(void *data)
 {
-	bfree(data);
+	struct audio_tap *tap = data;
+	if (os_atomic_compare_swap_long(&owner_id, tap->id, 0)) {
+		engine_client_stop();
+		obs_log(LOG_INFO, "captions source removed");
+	}
+	bfree(tap);
 }
 
-/* Audio thread. Filters receive float planar samples, one plane per
- * channel. Pass audio through unchanged; only measure it. */
+/*
+ * Audio thread. Filters receive float planar samples, one plane per
+ * channel. Audio passes through unchanged. The owner mixes to mono into the
+ * ring buffer; every instance measures the level for its status line.
+ * No locks, no allocation, no logging.
+ */
 static struct obs_audio_data *tap_filter_audio(void *data, struct obs_audio_data *audio)
 {
 	struct audio_tap *tap = data;
+	const size_t channels = tap->channels < MAX_AV_PLANES ? tap->channels : MAX_AV_PLANES;
+	const bool owner = is_owner(tap);
+	float mix[MIX_CHUNK];
 	float peak = 0.0f;
 
-	for (size_t ch = 0; ch < tap->channels && ch < MAX_AV_PLANES; ch++) {
-		const float *samples = (const float *)audio->data[ch];
-		if (!samples)
-			continue;
-		for (uint32_t i = 0; i < audio->frames; i++) {
-			float v = fabsf(samples[i]);
-			if (v > peak)
-				peak = v;
+	for (uint32_t start = 0; start < audio->frames; start += MIX_CHUNK) {
+		uint32_t n = audio->frames - start < MIX_CHUNK ? audio->frames - start : MIX_CHUNK;
+		size_t used = 0;
+		for (uint32_t i = 0; i < n; i++)
+			mix[i] = 0.0f;
+		for (size_t ch = 0; ch < channels; ch++) {
+			const float *samples = (const float *)audio->data[ch];
+			if (!samples)
+				continue;
+			used++;
+			for (uint32_t i = 0; i < n; i++) {
+				float v = samples[start + i];
+				mix[i] += v;
+				if (fabsf(v) > peak)
+					peak = fabsf(v);
+			}
+		}
+		if (owner && used > 0) {
+			for (uint32_t i = 0; i < n; i++)
+				mix[i] /= (float)used;
+			ring_buffer_write(&ring, mix, n);
 		}
 	}
 
@@ -147,9 +201,12 @@ static obs_properties_t *tap_get_properties(void *data)
 	obs_properties_t *props = obs_properties_create();
 	char status[256];
 
-	format_audio_status(tap, status, sizeof(status));
-	obs_property_t *p = obs_properties_add_text(props, "audio_status", status, OBS_TEXT_INFO);
+	const char *engine_key = is_owner(tap) ? engine_client_status_key() : "Filter.Status.OtherSource";
+	obs_property_t *p = obs_properties_add_text(props, "engine_status", obs_module_text(engine_key), OBS_TEXT_INFO);
 	obs_property_text_set_info_type(p, OBS_TEXT_INFO_NORMAL);
+
+	format_audio_status(tap, status, sizeof(status));
+	obs_properties_add_text(props, "audio_status", status, OBS_TEXT_INFO);
 	obs_properties_add_button(props, "refresh", obs_module_text("Filter.Refresh"), on_refresh);
 
 	obs_properties_add_button(props, "send_test", obs_module_text("Test.Send"), on_send_test);
@@ -174,8 +231,29 @@ static struct obs_source_info audio_tap_info = {
 
 bool audio_tap_init(void)
 {
+	sample_rate = audio_output_get_sample_rate(obs_get_audio());
+	if (!ring_buffer_init(&ring, RING_CAPACITY))
+		return false;
 	obs_register_source(&audio_tap_info);
 	return true;
 }
 
-void audio_tap_shutdown(void) {}
+void audio_tap_shutdown(void)
+{
+	ring_buffer_free(&ring);
+}
+
+uint32_t audio_tap_sample_rate(void)
+{
+	return sample_rate;
+}
+
+size_t audio_tap_read(float *out, size_t max)
+{
+	return ring_buffer_read(&ring, out, max);
+}
+
+void audio_tap_clear(void)
+{
+	ring_buffer_clear(&ring);
+}
