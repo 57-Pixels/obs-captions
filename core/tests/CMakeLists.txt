@@ -11,6 +11,7 @@ target_sources(
     test-wrap.cpp
     test-filters.cpp
     test-scheduler.cpp
+    test-c-api.cpp
 )
 target_include_directories(simple-local-captions-core-tests PRIVATE ../third_party ..)
 target_link_libraries(simple-local-captions-core-tests PRIVATE simple-local-captions-core)
