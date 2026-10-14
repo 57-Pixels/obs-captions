@@ -23,12 +23,14 @@ endif()
 target_sources(
   simple-local-captions-core
   PRIVATE
+    include/slc/c-api.h
     include/slc/caption-update.h
     include/slc/config.h
     include/slc/events.h
     include/slc/pipeline.h
     include/slc/stats.h
     include/slc/version.h
+    src/c-api.cpp
     src/config.cpp
     src/pipeline.cpp
     src/version.cpp
