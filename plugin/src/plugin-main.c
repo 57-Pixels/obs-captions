@@ -17,6 +17,7 @@
 
 #include "audio-tap.h"
 #include "caption-out.h"
+#include "engine-client.h"
 #include "frontend.h"
 #include "ui/caption-dock.h"
 
@@ -27,8 +28,11 @@ bool obs_module_load(void)
 {
 	if (!caption_out_init())
 		return false;
+	if (!engine_client_init())
+		return false;
 	frontend_init();
-	audio_tap_init();
+	if (!audio_tap_init())
+		return false;
 	if (!caption_dock_create())
 		obs_log(LOG_WARNING, "could not add the Captions dock");
 
@@ -38,6 +42,7 @@ bool obs_module_load(void)
 
 void obs_module_unload(void)
 {
+	engine_client_shutdown();
 	audio_tap_shutdown();
 	frontend_shutdown();
 	caption_out_shutdown();

@@ -15,6 +15,7 @@
 #include <plugin-support.h>
 
 #include "caption-out.h"
+#include "engine-client.h"
 
 /* Both getters return a new reference (UI/api-interface.cpp,
  * obs_output_get_ref); for Enhanced Broadcasting the streaming output is
@@ -37,6 +38,7 @@ static void on_frontend_event(enum obs_frontend_event event, void *data)
 	switch (event) {
 	case OBS_FRONTEND_EVENT_STREAMING_STARTED:
 		attach(CAPTION_TARGET_STREAM, obs_frontend_get_streaming_output(), "stream");
+		engine_client_request_reset();
 		break;
 	case OBS_FRONTEND_EVENT_STREAMING_STOPPING:
 	case OBS_FRONTEND_EVENT_STREAMING_STOPPED:

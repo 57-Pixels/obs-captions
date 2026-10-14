@@ -16,7 +16,7 @@ endif()
 add_library(${CMAKE_PROJECT_NAME} MODULE)
 
 find_package(libobs REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::libobs simple-local-captions-core)
 
 if(ENABLE_FRONTEND_API)
   find_package(obs-frontend-api REQUIRED)
@@ -50,6 +50,8 @@ target_sources(
     src/engine-client.h
     src/frontend.c
     src/frontend.h
+    src/ring-buffer.c
+    src/ring-buffer.h
 )
 
 if(ENABLE_QT)
